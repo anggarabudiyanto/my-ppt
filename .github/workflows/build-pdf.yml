@@ -46,46 +46,25 @@ jobs:
             texlive-bibtex-extra \
             biber
 
-      # PROBE: biseksi penyebab error — 4 varian dokumen uji
+      # PROBE: biseksi penyebab error — varian dokumen uji (laporan konteks penuh)
       - name: Probe biseksi biblatex/beamer
         working-directory: template
         run: |
           mkdir -p /tmp/pb/v2
-          # V1: beamer + ppt.sty utuh (harusnya gagal seperti dokumen asli)
-          cat > /tmp/pb/v1.tex <<'EOF'
-          \documentclass[11pt,aspectratio=169]{beamer}
-          \usepackage{ppt}
-          \begin{document}\begin{frame}uji\end{frame}\end{document}
-          EOF
-          # V2: beamer + ppt.sty TANPA baris \xapptobibmacro (kompilasi dari
-          #     folder sendiri agar memakai ppt.sty yang sudah dimodifikasi)
+          # V1: beamer + ppt.sty utuh
+          printf '%s\n' '\documentclass[11pt,aspectratio=169]{beamer}' '\usepackage{ppt}' '\begin{document}\begin{frame}uji\end{frame}\end{document}' > /tmp/pb/v1.tex
+          # V2: beamer + ppt.sty tanpa baris \xapptobibmacro
           sed 's/^\\xapptobibmacro/%NOPATCH% \\xapptobibmacro/' ppt.sty > /tmp/pb/v2/ppt.sty
           cp bib.bib /tmp/pb/v2/
-          cat > /tmp/pb/v2/v2.tex <<'EOF'
-          \documentclass[11pt,aspectratio=169]{beamer}
-          \usepackage{ppt}
-          \begin{document}\begin{frame}uji\end{frame}\end{document}
-          EOF
-          # V3: beamer + biblatex + xpatch + \firstcite (inti mekanisme)
-          cat > /tmp/pb/v3.tex <<'EOF'
-          \documentclass[11pt,aspectratio=169]{beamer}
-          \usepackage[style=numeric,sorting=none,backend=biber]{biblatex}
-          \addbibresource{bib.bib}
-          \usepackage{xpatch}
-          \xapptobibmacro{cite}{\setunit{\nametitledelim}\printfield{title}\setunit{\nametitledelim}\printfield{year}}
-          \DeclareCiteCommand{\firstcite}
-            {\usebibmacro{prenote}}
-            {\footnotemark[\thefield{labelnumber}]}
-            {\multicitedelim}
-            {\usebibmacro{postnote}}
-          \begin{document}\begin{frame}uji \cite{barnett2009quantum}\end{frame}\end{document}
-          EOF
-          # V4: seperti V3 tanpa \xapptobibmacro
-          grep -v '^\\xapptobibmacro' /tmp/pb/v3.tex > /tmp/pb/v4.tex || true
-          if pdflatex -interaction=nonstopmode -output-directory=/tmp/pb /tmp/pb/v1.tex > /tmp/pb/v1.out 2>&1; then echo "::error::V1 OK"; else echo "::error::V1 GAGAL: $(grep -m1 -A1 '^! ' /tmp/pb/v1.out | head -c 220)"; fi
-          ( cd /tmp/pb/v2 && pdflatex -interaction=nonstopmode v2.tex > /tmp/pb/v2.out 2>&1 ) && echo "::error::V2 OK" || echo "::error::V2 GAGAL: $(grep -m1 -A1 '^! ' /tmp/pb/v2.out | head -c 220)"
-          if pdflatex -interaction=nonstopmode -output-directory=/tmp/pb /tmp/pb/v3.tex > /tmp/pb/v3.out 2>&1; then echo "::error::V3 OK"; else echo "::error::V3 GAGAL: $(grep -m1 -A1 '^! ' /tmp/pb/v3.out | head -c 220)"; fi
-          if pdflatex -interaction=nonstopmode -output-directory=/tmp/pb /tmp/pb/v4.tex > /tmp/pb/v4.out 2>&1; then echo "::error::V4 OK"; else echo "::error::V4 GAGAL: $(grep -m1 -A1 '^! ' /tmp/pb/v4.out | head -c 220)"; fi
+          printf '%s\n' '\documentclass[11pt,aspectratio=169]{beamer}' '\usepackage{ppt}' '\begin{document}\begin{frame}uji\end{frame}\end{document}' > /tmp/pb/v2/v2.tex
+          # V5: beamer + biblatex saja + DeclareCiteCommand (tanpa ppt.sty)
+          printf '%s\n' '\documentclass[11pt,aspectratio=169]{beamer}' '\usepackage[style=numeric,sorting=none,backend=biber]{biblatex}' '\addbibresource{bib.bib}' '\DeclareCiteCommand{\firstcite}' '  {\usebibmacro{prenote}}' '  {\footnotemark[\thefield{labelnumber}]}' '  {\multicitedelim}' '  {\usebibmacro{postnote}}' '\begin{document}\begin{frame}uji \cite{barnett2009quantum}\end{frame}\end{document}' > /tmp/pb/v5.tex
+          # V6: article + ppt.sty utuh (tanpa beamer)
+          printf '%s\n' '\documentclass[11pt]{article}' '\usepackage{ppt}' '\begin{document}uji\end{document}' > /tmp/pb/v6.tex
+          if pdflatex -interaction=nonstopmode -file-line-error -output-directory=/tmp/pb /tmp/pb/v1.tex > /tmp/pb/v1.out 2>&1; then echo "::error::V1 OK"; else echo "::error::V1 GAGAL: $(grep -m1 '^! ' /tmp/pb/v1.out | head -c 150) :: $(grep -m1 '^l\.[0-9]' /tmp/pb/v1.out | head -c 120)"; fi
+          ( cd /tmp/pb/v2 && pdflatex -interaction=nonstopmode -file-line-error v2.tex > /tmp/pb/v2.out 2>&1 ) && echo "::error::V2 OK" || echo "::error::V2 GAGAL: $(grep -m1 '^! ' /tmp/pb/v2.out | head -c 150) :: $(grep -m1 '^l\.[0-9]' /tmp/pb/v2.out | head -c 120)"
+          if pdflatex -interaction=nonstopmode -file-line-error -output-directory=/tmp/pb /tmp/pb/v5.tex > /tmp/pb/v5.out 2>&1; then echo "::error::V5 OK"; else echo "::error::V5 GAGAL: $(grep -m1 '^! ' /tmp/pb/v5.out | head -c 150) :: $(grep -m1 '^l\.[0-9]' /tmp/pb/v5.out | head -c 120)"; fi
+          if pdflatex -interaction=nonstopmode -file-line-error -output-directory=/tmp/pb /tmp/pb/v6.tex > /tmp/pb/v6.out 2>&1; then echo "::error::V6 OK"; else echo "::error::V6 GAGAL: $(grep -m1 '^! ' /tmp/pb/v6.out | head -c 150) :: $(grep -m1 '^l\.[0-9]' /tmp/pb/v6.out | head -c 120)"; fi
 
       - name: Kompilasi (pdflatex -> biber -> pdflatex x2)
         working-directory: template

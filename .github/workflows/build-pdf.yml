@@ -64,23 +64,35 @@ jobs:
           pdflatex -interaction=nonstopmode -halt-on-error -file-line-error main.tex
           pdflatex -interaction=nonstopmode -halt-on-error -file-line-error main.tex
 
-      # Diagnosa: simpan log kompilasi (dan PDF bila sukses) ke folder ci/ di
-      # branch, sehingga bisa diperiksa tanpa mengunduh artifact. Commit ini
-      # TIDAK memicu workflow lagi (trigger hanya pada perubahan template/**).
+      # Diagnosa: kirim potongan akhir main.log sebagai anotasi GitHub, lalu
+      # upayakan menyimpan log/PDF ke folder ci/ di branch.
       - name: Lampirkan log/hasil ke branch (diagnosa)
         if: always()
         run: |
+          set -x
+          echo "::error::pwd=$(pwd) head=$(git rev-parse --short HEAD) ref=${{ github.ref_name }}"
+          if [ -f template/main.log ]; then
+            echo "::error::main.log ADA"
+            tail -25 template/main.log | nl -ba | while IFS= read -r l; do echo "::error::LOG ${l:0:230}"; done
+          else
+            echo "::error::main.log TIDAK ADA"; ls -la template | head -20
+          fi
           git config user.name "arena-ai-coding-agent[bot]"
           git config user.email "arena-ai-coding-agent[bot]@users.noreply.github.com"
           mkdir -p ci
-          [ -f template/main.log ] && cp template/main.log ci/main.log
-          [ -f template/main.blg ] && cp template/main.blg ci/main.blg
+          [ -f template/main.log ] && cp template/main.log ci/main.log || true
+          [ -f template/main.blg ] && cp template/main.blg ci/main.blg || true
           if [ -f template/main.pdf ]; then
             cp template/main.pdf ci/Template-Presentasi-Telkom-University.pdf
           fi
-          git add ci
-          git commit -m "CI: lampiran log & hasil kompilasi [skip ci]" || echo "tidak ada perubahan"
-          git push origin HEAD:${{ github.ref_name }}
+          git add -A ci || echo "::error::git add gagal"
+          if git diff --cached --quiet; then
+            echo "::error::tidak ada yang bisa di-commit (staging kosong)"
+          else
+            git commit -m "CI: log & hasil kompilasi [skip ci]" || echo "::error::commit gagal"
+            out=$(git push origin HEAD:${{ github.ref_name }} 2>&1) || echo "::error::push gagal ${out:0:200}"
+            echo "::error::push: ${out:0:200}"
+          fi
 
       - name: Simpan PDF sebagai artifact
         uses: actions/upload-artifact@v4

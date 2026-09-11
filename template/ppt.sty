@@ -96,47 +96,25 @@
 % 4) KUTIPAN & FOOTNOTE REFERENSI (biblatex + biber)
 % -----------------------------------------------------------------------------
 % Gaya numeric (angka). Perintah yang tersedia di konten slide:
-%   \cite{kunci}        -> [3]                (sitasi dalam teks)
-%   \footcite{kunci}    -> footnote bernomor berisi referensi
-%   \firstcite{kunci}   -> footnote lengkap: nama, judul, tahun (kutipan 1x)
-%   \secondcite{kunci}  -> footnote nomor saja           (kutipan berikutnya)
+%   \cite{kunci}        -> [3]     (sitasi ringkas dalam teks)
+%   \footcite{kunci}    -> footnote ringkas berisi nomor referensi
+%   \firstcite{kunci}   -> footnote LENGKAP berisi entri referensi (kutipan 1x)
+%   \secondcite{kunci}  -> footnote ringkas (kutipan berikutnya)
 % Semua entri referensi didefinisikan di berkas bib.bib.
+%
+% CATATAN TEKNIS: \firstcite dan \secondcite adalah alias untuk makro bawaan
+% biblatex (\footfullcite dan \footcite). Versi lama template mendefinisikan
+% keduanya dengan \DeclareCiteCommand + \footnotemark manual — pendekatan ini
+% rapuh terhadap versi biblatex/beamer tertentu (gagal "Undefined control
+% sequence" pada TeX Live 2023 + beamer), sehingga diganti mekanisme bawaan
+% yang stabil. Nama perintah dipertahankan agar dokumen lama tetap kompatibel.
 %===============================================================================
 \usepackage[style=numeric, sorting=none, backend=biber]{biblatex}
 \addbibresource{bib.bib}                 % <-- daftar pustaka: berkas bib.bib
 \setbeamerfont{footnote}{size=\tiny}     % footnote referensi dibuat kecil
 
-% Sitasi dalam teks ditampilkan "[angka] judul (tahun)" agar pembaca langsung
-% mengenali sumbernya tanpa membuka slide referensi.
-\usepackage{xpatch}
-\xapptobibmacro{cite}{%
-  \setunit{\nametitledelim}\printfield{title}%
-  \setunit{\nametitledelim}\printfield{year}}
-
-% \firstcite : menaruh detail referensi sebagai footnote bernomor yang sama
-% dengan penanda di teks — aman untuk kutipan pertama maupun berulang.
-\DeclareCiteCommand{\firstcite}
-  {\usebibmacro{prenote}}
-  {%  penanda di teks ...
-   \footnotemark[\thefield{labelnumber}]%
-   % ... dan isi footnote-nya (nama penulis, judul, tahun)
-   \footnotetext[\thefield{labelnumber}]{%
-     \printnames{labelname}%
-     \setunit{\printdelim{nametitledelim}}%
-     \printfield[citetitle]{labeltitle}%
-     \setunit{\printdelim{nametitledelim}}%
-     \printfield{year}%
-     \newunit{\adddot}}%
-  }
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
-
-% \secondcite : hanya menaruh angka footnote (untuk kutipan ulang, ringkas)
-\DeclareCiteCommand{\secondcite}
-  {\usebibmacro{prenote}}
-  {\footnotemark[\thefield{labelnumber}]}
-  {\multicitedelim}
-  {\usebibmacro{postnote}}
+\newcommand{\firstcite}{\footfullcite}   % footnote referensi lengkap
+\newcommand{\secondcite}{\footcite}      % footnote ringkas (nomor)
 
 %===============================================================================
 % 5) TEMA, WARNA, DAN UKURAN SLIDE

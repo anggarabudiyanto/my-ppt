@@ -332,10 +332,10 @@ MATLAB, R, HTML, SQL.
 
 | Perintah              | Efek                                                  |
 |-----------------------|-------------------------------------------------------|
-| `\cite{kunci}`        | `[angka, judul (tahun)]` dalam teks                   |
-| `\footcite{kunci}`    | referensi lengkap di kaki slide (footnote)            |
-| `\firstcite{kunci}`   | footnote lengkap — untuk **pertama** kali mengutip    |
-| `\secondcite{kunci}`  | footnote nomor saja — untuk kutipan **ulang**         |
+| `\cite{kunci}`        | `[angka]` ringkas dalam teks                          |
+| `\footcite{kunci}`    | footnote ringkas berisi nomor referensi               |
+| `\firstcite{kunci}`   | footnote LENGKAP (entri penuh) — kutipan pertama      |
+| `\secondcite{kunci}`  | footnote ringkas — untuk kutipan ulang                |
 
 3. Slide **REFERENSI** (`04-referensi.tex`) mengisi otomatis.
 

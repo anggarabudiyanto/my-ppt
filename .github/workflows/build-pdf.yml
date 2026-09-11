@@ -46,25 +46,20 @@ jobs:
             texlive-bibtex-extra \
             biber
 
-      # PROBE: biseksi penyebab error — varian dokumen uji (laporan konteks penuh)
+      # PROBE: biseksi penyebab error — raw output tiap varian
       - name: Probe biseksi biblatex/beamer
         working-directory: template
         run: |
           mkdir -p /tmp/pb/v2
-          # V1: beamer + ppt.sty utuh
-          printf '%s\n' '\documentclass[11pt,aspectratio=169]{beamer}' '\usepackage{ppt}' '\begin{document}\begin{frame}uji\end{frame}\end{document}' > /tmp/pb/v1.tex
-          # V2: beamer + ppt.sty tanpa baris \xapptobibmacro
-          sed 's/^\\xapptobibmacro/%NOPATCH% \\xapptobibmacro/' ppt.sty > /tmp/pb/v2/ppt.sty
-          cp bib.bib /tmp/pb/v2/
-          printf '%s\n' '\documentclass[11pt,aspectratio=169]{beamer}' '\usepackage{ppt}' '\begin{document}\begin{frame}uji\end{frame}\end{document}' > /tmp/pb/v2/v2.tex
-          # V5: beamer + biblatex saja + DeclareCiteCommand (tanpa ppt.sty)
+          # V5: beamer + biblatex + DeclareCiteCommand (tanpa ppt.sty)
           printf '%s\n' '\documentclass[11pt,aspectratio=169]{beamer}' '\usepackage[style=numeric,sorting=none,backend=biber]{biblatex}' '\addbibresource{bib.bib}' '\DeclareCiteCommand{\firstcite}' '  {\usebibmacro{prenote}}' '  {\footnotemark[\thefield{labelnumber}]}' '  {\multicitedelim}' '  {\usebibmacro{postnote}}' '\begin{document}\begin{frame}uji \cite{barnett2009quantum}\end{frame}\end{document}' > /tmp/pb/v5.tex
-          # V6: article + ppt.sty utuh (tanpa beamer)
-          printf '%s\n' '\documentclass[11pt]{article}' '\usepackage{ppt}' '\begin{document}uji\end{document}' > /tmp/pb/v6.tex
-          if pdflatex -interaction=nonstopmode -file-line-error -output-directory=/tmp/pb /tmp/pb/v1.tex > /tmp/pb/v1.out 2>&1; then echo "::error::V1 OK"; else echo "::error::V1 GAGAL: $(grep -m1 '^! ' /tmp/pb/v1.out | head -c 150) :: $(grep -m1 '^l\.[0-9]' /tmp/pb/v1.out | head -c 120)"; fi
-          ( cd /tmp/pb/v2 && pdflatex -interaction=nonstopmode -file-line-error v2.tex > /tmp/pb/v2.out 2>&1 ) && echo "::error::V2 OK" || echo "::error::V2 GAGAL: $(grep -m1 '^! ' /tmp/pb/v2.out | head -c 150) :: $(grep -m1 '^l\.[0-9]' /tmp/pb/v2.out | head -c 120)"
-          if pdflatex -interaction=nonstopmode -file-line-error -output-directory=/tmp/pb /tmp/pb/v5.tex > /tmp/pb/v5.out 2>&1; then echo "::error::V5 OK"; else echo "::error::V5 GAGAL: $(grep -m1 '^! ' /tmp/pb/v5.out | head -c 150) :: $(grep -m1 '^l\.[0-9]' /tmp/pb/v5.out | head -c 120)"; fi
-          if pdflatex -interaction=nonstopmode -file-line-error -output-directory=/tmp/pb /tmp/pb/v6.tex > /tmp/pb/v6.out 2>&1; then echo "::error::V6 OK"; else echo "::error::V6 GAGAL: $(grep -m1 '^! ' /tmp/pb/v6.out | head -c 150) :: $(grep -m1 '^l\.[0-9]' /tmp/pb/v6.out | head -c 120)"; fi
+          # V7: beamer + biblatex + footcite/footfullcite (tanpa DeclareCiteCommand)
+          printf '%s\n' '\documentclass[11pt,aspectratio=169]{beamer}' '\usepackage[style=numeric,sorting=none,backend=biber]{biblatex}' '\addbibresource{bib.bib}' '\begin{document}\begin{frame}uji \footcite{barnett2009quantum} dan \footfullcite{slepian1973noiseless}\end{frame}\end{document}' > /tmp/pb/v7.tex
+          # V8: article + biblatex + DeclareCiteCommand
+          printf '%s\n' '\documentclass[11pt]{article}' '\usepackage[style=numeric,sorting=none,backend=biber]{biblatex}' '\addbibresource{bib.bib}' '\DeclareCiteCommand{\firstcite}' '  {\usebibmacro{prenote}}' '  {\footnotemark[\thefield{labelnumber}]}' '  {\multicitedelim}' '  {\usebibmacro{postnote}}' '\begin{document}uji \cite{barnett2009quantum}\end{document}' > /tmp/pb/v8.tex
+          if pdflatex -interaction=nonstopmode -output-directory=/tmp/pb /tmp/pb/v5.tex > /tmp/pb/v5.out 2>&1; then echo "::error::V5 OK"; else echo "::error::V5 GAGAL tail: $(tail -4 /tmp/pb/v5.out | tr '\n' '|' | head -c 300)"; fi
+          if pdflatex -interaction=nonstopmode -output-directory=/tmp/pb /tmp/pb/v7.tex > /tmp/pb/v7.out 2>&1; then echo "::error::V7 OK"; else echo "::error::V7 GAGAL tail: $(tail -4 /tmp/pb/v7.out | tr '\n' '|' | head -c 300)"; fi
+          if pdflatex -interaction=nonstopmode -output-directory=/tmp/pb /tmp/pb/v8.tex > /tmp/pb/v8.out 2>&1; then echo "::error::V8 OK"; else echo "::error::V8 GAGAL tail: $(tail -4 /tmp/pb/v8.out | tr '\n' '|' | head -c 300)"; fi
 
       - name: Kompilasi (pdflatex -> biber -> pdflatex x2)
         working-directory: template

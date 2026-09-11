@@ -87,7 +87,7 @@ jobs:
       # Diagnosa: kirim potongan akhir main.log sebagai anotasi GitHub, lalu
       # upayakan menyimpan log/PDF ke folder ci/ di branch.
       - name: Lampirkan log/hasil ke branch (diagnosa)
-        if: always()
+        if: failure()
         run: |
           # Batas anotasi per langkah = 10. Prioritas: baris error LaTeX
           # (dengan satu baris konteks di atasnya).

@@ -1,0 +1,147 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  BIB.BIB — DAFTAR PUSTAKA
+%  -----------------------------------------------------------------------------
+%  Semua referensi didefinisikan di sini dengan format BibTeX, lalu dipanggil di
+%  slide dengan perintah \cite{kunci} / \footcite{kunci} / \firstcite{kunci}.
+%
+%  CARA MENAMBAH REFERENSI
+%    1. Salin salah satu templat di bawah (@book, @article, @inproceedings,
+%       @online) ke bagian DAFTAR ENTRI.
+%    2. Ganti "kunci" dengan nama kunci unik Anda (huruf tanpa spasi,
+%       disarankan: penulisTahunKataKunci, mis. barnett2009quantum).
+%    3. Isi kolom judul/penulis/tahun. Kolom yang tidak perlu boleh dihapus.
+%    4. Panggil di slide: \cite{penulisTahunKataKunci}
+%
+%  TIPE ENTRI YANG PALING SERING DIPAKAI
+%    @book          : buku
+%    @article       : artikel jurnal
+%    @inproceedings : makalah prosiding konferensi
+%    @online        : situs web / artikel daring (isi url + urldate)
+%    @thesis        : skripsi/tesis/disertasi (type = {phd} / {master})
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%===============================================================================
+% CONTOH TEMPELAT (biarkan berkomentar; salin & sunting sesuai kebutuhan)
+%===============================================================================
+% @book{kunciBuku,
+%   title     = {Judul Buku},
+%   author    = {Nama Belakang, Nama Depan},          % penulis ganda: {A, B} and {C, D}
+%   year      = {2024},
+%   publisher = {Nama Penerbit},
+%   edition   = {2},                                  % opsional
+% }
+%
+% @article{kunciJurnal,
+%   title   = {Judul Artikel},
+%   author  = {Nama Belakang, Nama Depan},
+%   journal = {Nama Jurnal},
+%   volume  = {12},
+%   number  = {3},
+%   pages   = {45--60},
+%   year    = {2024},
+% }
+%
+% @inproceedings{kunciKonferensi,
+%   title     = {Judul Makalah},
+%   author    = {Nama Belakang, Nama Depan},
+%   booktitle = {Proc. Nama Konferensi},
+%   pages     = {1--10},
+%   year      = {2024},
+% }
+%
+% @online{kunciWeb,
+%   title   = {Judul Halaman},
+%   author  = {Nama Penulis/Organisasi},
+%   url     = {https://alamat.web/halaman},
+%   urldate = {2026-09-11},          % tanggal Anda mengakses URL
+%   year    = {2024},
+% }
+
+%===============================================================================
+% DAFTAR ENTRI (contoh terpakai oleh slide bawaan template)
+%===============================================================================
+
+@book{barnett2009quantum,
+  title     = {Quantum Information},
+  author    = {Barnett, Stephen},
+  volume    = {16},
+  year      = {2009},
+  publisher = {Oxford University Press}
+}
+
+@book{djordjevic2019physical,
+  title     = {Physical-Layer Security and Quantum Key Distribution},
+  author    = {Djordjevic, Ivan B},
+  year      = {2019},
+  publisher = {Springer}
+}
+
+@book{wolfowitz2012coding,
+  title     = {Coding Theorems of Information Theory},
+  author    = {Wolfowitz, Jacob},
+  volume    = {31},
+  year      = {2012},
+  publisher = {Springer Science \& Business Media}
+}
+
+@inproceedings{cerf1997negative,
+  title     = {Negative Entropy in Quantum Information Theory},
+  author    = {Cerf, Nicolas J and Adami, Chris},
+  booktitle = {New Developments on Fundamental Problems in Quantum Physics},
+  pages     = {77--84},
+  year      = {1997},
+  publisher = {Springer}
+}
+
+@article{einstein1935can,
+  title   = {Can Quantum-Mechanical Description of Physical Reality Be Considered Complete?},
+  author  = {Einstein, Albert and Podolsky, Boris and Rosen, Nathan},
+  journal = {Physical Review},
+  volume  = {47},
+  number  = {10},
+  pages   = {777},
+  year    = {1935},
+  publisher = {APS}
+}
+
+@article{slepian1973noiseless,
+  title   = {Noiseless Coding of Correlated Information Sources},
+  author  = {Slepian, David and Wolf, Jack},
+  journal = {IEEE Transactions on Information Theory},
+  volume  = {19},
+  number  = {4},
+  pages   = {471--480},
+  year    = {1973},
+  publisher = {IEEE}
+}
+
+@article{aspect1999bell,
+  title   = {Bell's Inequality Test: More Ideal than Ever},
+  author  = {Aspect, Alain},
+  journal = {Nature},
+  volume  = {398},
+  number  = {6724},
+  pages   = {189--190},
+  year    = {1999},
+  publisher = {Nature Publishing Group UK London}
+}
+
+@online{annur2022kepemilikan,
+  title   = {Kepemilikan Ponsel di Indonesia Melonjak 68\% dalam 1 Dekade Terakhir},
+  author  = {Annur, Cindy Mutia},
+  url     = {https://databoks.katadata.co.id/datapublish/2022/09/08/kepemilikan-ponsel-di-indonesia-melonjak-68-dalam-1-dekade-terakhir},
+  urldate = {2026-09-11},
+  year    = {2022},
+  month   = {9},
+}
+
+@online{muller2023,
+  title   = {Apa yang Dimaksud dengan `Quantum Entanglement'? Seorang Fisikawan Menjelaskannya},
+  author  = {Muller, Andreas},
+  url     = {https://theconversation.com/apa-yang-dimaksud-dengan-quantum-entanglement-seorang-fisikawan-menjelaskannya-206776},
+  urldate = {2026-09-11},
+  year    = {2023},
+  month   = {6},
+}
+
+% Akhir berkas

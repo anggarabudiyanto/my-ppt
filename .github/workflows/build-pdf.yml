@@ -1,0 +1,74 @@
+# ==============================================================================
+#  BUILD-PDF.YML — Kompilasi otomatis presentasi menjadi PDF via GitHub Actions
+#  -----------------------------------------------------------------------------
+#  Setiap kali kode di-push (folder template/ berubah), GitHub:
+#    1. memasang TeX Live + biber,
+#    2. mengompilasi template/main.tex  (pdflatex -> biber -> pdflatex x2),
+#    3. menyimpan hasil main.pdf sebagai ARTIFACT "Template-Presentasi-PDF"
+#       (unduh dari tab Actions pada run terbaru),
+#    4. pada branch main: memperbarui RELEASE "PDF Terbaru" berisi PDF siap
+#       unduh (tab Releases pada halaman repositori).
+#  Tidak perlu memasang apa pun di komputer Anda untuk mendapatkan PDF.
+# ==============================================================================
+name: Build PDF
+
+on:
+  push:
+    branches: ["**"]          # jalankan di semua branch (termasuk branch kerja)
+    paths:
+      - "template/**"
+      - ".github/workflows/build-pdf.yml"
+  pull_request:
+    paths:
+      - "template/**"
+  workflow_dispatch:          # izinkan "Run workflow" manual dari tab Actions
+
+permissions:
+  contents: write             # dibutuhkan untuk membuat/memperbarui Release
+
+jobs:
+  compile:
+    name: Kompilasi LaTeX -> PDF
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil kode repositori
+        uses: actions/checkout@v4
+
+      - name: Pasang TeX Live (pdflatex, biblatex) dan biber
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-bibtex-extra \
+            biber
+
+      - name: Kompilasi (pdflatex -> biber -> pdflatex x2)
+        working-directory: template
+        run: |
+          set -e
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          biber main
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+
+      - name: Simpan PDF sebagai artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Template-Presentasi-PDF-${{ github.run_number }}
+          path: template/main.pdf
+          if-no-files-found: error
+
+      - name: Perbarui Release "PDF Terbaru" (hanya di branch main)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: pdf-terbaru
+          name: "PDF Terbaru"
+          body: |
+            PDF ter kompilasi otomatis dari commit ${{ github.sha }}.
+            Berkas: **Template-Presentasi-Telkom-University.pdf**
+          files: template/main.pdf
+          make_latest: true

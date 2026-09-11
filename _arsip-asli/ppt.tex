@@ -1,0 +1,255 @@
+% This template is inspired by the VT Presentation Template, as well as the THU Beamer Theme. Many thanks!
+\usepackage{xcolor}
+\usepackage{transparent}
+\usepackage{braket}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{tikzsymbols}
+\usepackage{amsmath}
+\usepackage{amsthm, amssymb, amsfonts, latexsym, mathtools, thmtools, bbm}
+\usepackage{ragged2e}
+\graphicspath{{images/}{./}}
+\usepackage{booktabs}
+\usepackage{calligra}
+\usepackage{fnpct}
+\usepackage{listings}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{tikz}
+% \usepackage{appendixnumberbeamer} % Uncomment if needed
+
+% Other configurations and commands
+\renewcommand{\figurename}{\bo{Gambar }}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+\usepackage{adjustbox}
+\newcommand{\equ}{Persamaan}
+%\newcommand{\pic}{Gambar.}
+\usepackage{caption}
+\DeclareCaptionLabelFormat{noname}{Gambar #2.\hspace{0.1em}}
+\DeclareCaptionLabelSeparator{separatorbaru}{ }
+\captionsetup{labelsep=separatorbaru, labelformat=noname}
+% Judul referensi untuk beamer
+% Ganti judul "References" menjadi "Referensi"
+
+%---------------------------------------------------------
+%	FOOTNOTES & CITATIONS BASIC SETUP
+%---------------------------------------------------------
+% Check FOOTNOTES & CITATIONS ADVANCED SETUP for solutions for intra- and inter-frame citations
+% The workarounds in ADVANCED SETUP require the style to be "numeric"
+% If you're good without ADVANCED SETUP, comment out the ADVANCED SETUP section, and pick whatever style you like
+% \usepackage[style=authoryear, backend=bibtex]{biblatex}
+\usepackage[style=numeric, sorting=none, backend=biber]{biblatex}
+\addbibresource{bib.bib}
+\setbeamerfont{footnote}{size=\tiny}
+% The lines below set the citation style to "number, title, year". The ADVANCED SETUP will overwrite this style
+\usepackage{xpatch}
+\xapptobibmacro{cite}{\setunit{\nametitledelim} \printfield{title} \setunit{\nametitledelim} \printfield{year}}
+
+%---------------------------------------------------------
+%	FOOTNOTES & CITATIONS BASIC SETUP
+%---------------------------------------------------------
+% Check FOOTNOTES & CITATIONS ADVANCED SETUP for solutions for intra- and inter-frame citations
+% The workarounds in ADVANCED SETUP require the style to be "numeric"
+% If you're good without ADVANCED SETUP, comment out the ADVANCED SETUP section, and pick whatever style you like
+% \usepackage[style=authoryear, backend=bibtex]{biblatex}
+\usepackage[style=numeric, sorting=none, backend=biber]{biblatex}
+\addbibresource{bib.bib}
+\setbeamerfont{footnote}{size=\tiny}
+% The lines below set the citation style to "number, title, year". The ADVANCED SETUP will overwrite this style
+\usepackage{xpatch}
+\xapptobibmacro{cite}{\setunit{\nametitledelim} \printfield{title} \setunit{\nametitledelim} \printfield{year}}
+
+%---------------------------------------------------------
+%	FOOTNOTES & CITATIONS ADVANCED SETUP
+%---------------------------------------------------------
+% Manage faulty intra- and inter-frame footnotes and citations. References:
+%     https://tex.stackexchange.com/a/520777
+%     https://topanswers.xyz/tex?q=453
+
+% You might want to use \firstcite and \secondcite instead of \footnote in your document
+% Mark the first citation with \firstcite and the rest with \secondcite
+
+% \renewcommand{\thefootnote}{\arabic{footnote}} % Switch to footnote with numbers
+% \renewcommand{\thefootnote}{\alph{footnote}} % Switch to footnote with letters
+
+\DeclareCiteCommand{\firstcite}
+{\usebibmacro{prenote}}
+{%
+    \footnotemark[\thefield{labelnumber}]% mark corresponding to the number entry
+    \footnotetext[\thefield{labelnumber}]{% footnote text corresponding to the number entry
+        \printnames{labelname}% name
+        \setunit{\printdelim{nametitledelim}}% separator
+        % \setunit{\addperiod\space}% another way to add separator
+        \printfield[citetitle]{labeltitle}% title
+        \setunit{\printdelim{nametitledelim}}% separator
+        \printfield{year}% year
+        \newunit{\adddot}% ending dot
+    }%
+}
+{\multicitedelim}
+{\usebibmacro{postnote}}
+
+\DeclareCiteCommand{\secondcite}
+{\usebibmacro{prenote}}
+{%
+    \footnotemark[\thefield{labelnumber}]% mark corresponding to the number entry
+}
+{\multicitedelim}
+{\usebibmacro{postnote}}
+%---------------------------------------------------------
+%	SELECT THEME & COLORS
+%---------------------------------------------------------
+\usetheme{Madrid} % You can use other themes too, but this changes many things. I've found Madrid to be the best for this color scheme
+
+% fg = foreground color
+% bg = background color
+
+% Many colors are linked to multiple attributes, change with caution!
+\definecolor{smuBlue}{RGB}{21, 28, 85}
+% \definecolor{smuGold}{RGB}{138, 112, 76}
+\definecolor{scisGold}{RGB}{198, 146, 0}
+\definecolor{telu}{RGB}{148, 0, 0}
+\definecolor{merah}{RGB}{255, 0, 0}
+\definecolor{abu}{RGB}{211, 211, 211}
+\definecolor{abu1}{RGB}{47 ,79 ,79}
+\definecolor{abu2}{RGB}{241, 241, 241}
+\setbeamercolor*{structure}{bg=smuBlue, fg=smuBlue}
+% Title block and bottom right box color
+\setbeamercolor*{palette primary}{use=structure, fg=telu,bg=abu} % Bottom left box and bar between title & top bubbles
+\setbeamercolor*{palette secondary}{use=structure, fg=white, bg=telu}
+% Probably not used
+\setbeamercolor*{palette tertiary}{use=structure, fg=white, bg=smuBlue} 
+
+% Title of each slide
+\setbeamercolor{frametitle}{bg=abu1, fg=merah}
+\setbeamercolor*{titlelike}{parent=palette primary}
+
+%%% Headline and Central Footer %%%
+% You can change the theme back and forth for each frame
+% Theme I - white head, white foot
+    % \setbeamercolor{section in head/foot}{fg=scisGold, bg=white}
+    % \setbeamercolor{headline}{fg=scisGold, bg=white}
+% Theme II - gold head, gold foot (as shown in the title frame)
+% Atur lebar dan warna latar belakang untuk bagian bawah footer
+\setbeamercolor{author in head/foot}{fg=white, bg=scisGold}
+\setbeamerfont{author in head/foot}{size=\tiny} % Gantilah sesuai kebutuhan
+
+\setbeamercolor{nama_}{fg=white, bg=telu}
+\setbeamercolor{judul_}{fg=telu, bg=abu2}
+\setbeamercolor{tanggal_nomor}{fg=telu, bg=abu}
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+   \vspace{-0.01 cm}
+  \hspace{-0.08 cm}
+  \hbox{%
+    \begin{beamercolorbox}[wd=.25\paperwidth,ht=2.25ex,dp=1ex,center]{nama_}%
+      \usebeamerfont{author in head/foot}\insertshortauthor
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.20ex,dp=1ex,center]{judul_}%
+      \usebeamerfont{author in head/foot}\insertshorttitle 
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.30\paperwidth,ht=2.20ex,dp=1ex,center]{tanggal_nomor}%
+      \usebeamerfont{author in head/foot}\insertshortdate \hspace*{4ex} \insertframenumber{} / \inserttotalframenumber{}
+    \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+
+
+    
+    \setbeamercolor{headline}{fg=white, bg=scisGold}
+% Theme III - white head, gold foot (as shown in the rest of the frames)
+    % \setbeamercolor{section in head/foot}{fg=scisGold, bg=white}
+    % \setbeamercolor{title in head/foot}{fg=white, bg=scisGold}
+    % \setbeamercolor{headline}{fg=scisGold, bg=white}
+
+%%% Specific Colors %%%
+\setbeamercolor{item projected}{bg=scisGold}
+\setbeamertemplate{enumerate items}{bg=scisGold}
+
+\setbeamercolor{itemize item}{fg=scisGold}
+\setbeamercolor{itemize subitem}{fg=scisGold}
+
+\setbeamercolor{button}{bg=scisGold}
+
+%%% Edits ONLY the TOC slide %%%
+\setbeamercolor{section in toc}{fg=black}
+\setbeamercolor{subsection in toc}{fg=black}
+
+%%% Block Colors %%%
+% Standard block
+    \setbeamercolor{block title}{bg=scisGold, fg=white}
+    \setbeamercolor{block body}{bg=scisGold!20}
+% Alerted block
+    \setbeamercolor{block title alerted}{bg=orange, fg=white}
+    \setbeamercolor{block body alerted}{bg=orange!10}
+% Example block
+    \setbeamercolor{block title example}{bg=smuBlue, fg=white}
+    \setbeamercolor{block body example}{bg=smuBlue!10}
+
+%---------------------------------------------------------
+%	SELECT THE FONT THEME & FONTS
+%---------------------------------------------------------
+\usefonttheme{default} % Typeset using the default sans serif font
+%\usefonttheme{serif}
+\usepackage{palatino} % Use the Palatino font for serif text
+\usepackage[default]{opensans} % Use the Open Sans font for sans serif text
+\useinnertheme{circles}
+
+%---------------------------------------------------------
+%	SELECT THE OUTER THEME
+%---------------------------------------------------------
+% Outer themes change the overall layout of slides, such as header and footer lines, sidebars and slide titles. Uncomment each theme in turns to see what changes it makes to your presentation.
+
+% \useoutertheme{default}
+\useoutertheme{miniframes}
+% \useoutertheme{infolines}
+% \useoutertheme{smoothbars}
+% \useoutertheme{sidebar}
+%\useoutertheme{split}
+% \useoutertheme{shadow}
+% \useoutertheme{tree}
+% \useoutertheme{smoothtree}
+
+
+%---------------------------------------------------------
+%	CODE DISPLAY
+%---------------------------------------------------------
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{blue},
+    emphstyle=\ttfamily\color{red},   
+    stringstyle=\color{green},
+    numbers=left,
+    numberstyle=\small\color{gray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+    xleftmargin=1cm,
+    xrightmargin=1cm,
+}
+
+%---------------------------------------------------------
+%	EXTRA SETTINGS
+%---------------------------------------------------------
+
+% Clear warnings related to \translate
+%     https://github.com/josephwright/beamer/issues/449
+\pdfstringdefDisableCommands{
+    \def\translate#1{#1}
+}
+
+% Adjust header height
+\setbeamertemplate{headline}{
+    \nointerlineskip
+    \begin{beamercolorbox}[wd=\paperwidth,ht=7.0ex]{headline}
+        \insertnavigation{\paperwidth}\vspace*{2.0ex}
+    \end{beamercolorbox}
+}
+
+% Disable navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+
+
+
+

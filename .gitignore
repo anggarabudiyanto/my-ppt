@@ -1,0 +1,23 @@
+# ---------------------------------------------------------------------------
+# Berkas sementara hasil kompilasi LaTeX — tidak perlu disimpan di Git.
+# PDF hasil akhir dihasilkan otomatis oleh GitHub Actions (folder .github/).
+# ---------------------------------------------------------------------------
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdv
+template/main.pdf
+
+# Folder ekstraksi/kerja sementara
+_ext/

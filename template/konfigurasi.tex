@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  KONFIGURASI.TEX — IDENTITAS PRESENTASI (SATU-SATUNYA BERKAS WAJIB DIEDIT)
+%  -----------------------------------------------------------------------------
+%  Isi berkas ini HANYA data identitas: judul, penulis, institusi, tanggal, logo.
+%  Cukup ganti teks di sini, lalu tulis konten slide Anda di berkas 0X-*.tex.
+%
+%  PANDUAN CEPAT
+%    1. Ganti isi \title, \author, \institute, \date di bawah.
+%    2. Argumen DALAM KURUNG SIKU [...] adalah versi SINGKAT yang muncul di
+%       footer/header (ruangnya sempit, jadi buat 3-6 kata).
+%    3. Ganti berkas logo di folder assets/logo/ bila perlu (nama sama = tanpa
+%       perlu mengedit kode).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------------------
+% JUDUL
+%-------------------------------------------------------------------------------
+% Baris pertama (dalam [...]) = judul SINGKAT untuk footer.
+% Isi \title{} = judul lengkap. Gunakan \\ untuk memindah baris.
+\title[Template Presentasi Telkom University]{%
+  \textbf{Template Presentasi\\Telkom University -- AICOMS}}
+
+% (Opsional) subjudul — hapus tanda komentar bila dipakai:
+%\subtitle{Subjudul presentasi Anda}
+
+%-------------------------------------------------------------------------------
+% PENULIS
+%-------------------------------------------------------------------------------
+% Baris pertama (dalam [...]) = nama SINGKAT untuk footer.
+% Format isi: Nama (NIM) + dosen pembimbing (bisa dihapus bila tidak perlu).
+\author[Anggara Budiyanto]{%
+  \textbf{Anggara Budiyanto (1101201498)} \\[2pt]
+  {\footnotesize Supervisor: Dr. Eng. Khoirul Anwar, S.T., M.Eng.} \\
+  {\footnotesize Co-Supervisor: Dr. Linda Meylani, S.T., M.T.}}
+
+%-------------------------------------------------------------------------------
+% INSTITUSI
+%-------------------------------------------------------------------------------
+% Tampil di halaman sampul, di bawah nama penulis.
+\institute{%
+  The University Center of Excellence for Advanced Intelligent Communications (AICOMS) \\
+  \smallskip School of Electrical Engineering, Telkom University, Bandung, Indonesia \\
+  \smallskip \textit{anggarabudiyanto@student.telkomuniversity.ac.id}}
+
+%-------------------------------------------------------------------------------
+% TANGGAL / ACARA
+%-------------------------------------------------------------------------------
+% Baris pertama (dalam [...]) = teks SINGKAT untuk footer.
+% \today = tanggal hari kompilasi otomatis; ganti dengan tanggal tetap bila perlu,
+% contoh: \date[Sidang Tugas Akhir 2026]{Sidang Tugas Akhir \\ 11 September 2026}
+\date[Sidang Tugas Akhir 2026]{%
+  Presented at Telkom University\\
+  Hybrid, \today}
+
+%-------------------------------------------------------------------------------
+% LOGO POJOK (muncul di semua slide kecuali sampul & penutup)
+%-------------------------------------------------------------------------------
+% Logo dipasang di ujung kanan bilah navigasi atas (diatur ppt.sty).
+% Ukuran 0.7cm agar pas dengan tinggi bilah. Untuk MENGHILANGKAN logo,
+% beri tanda komentar (%) pada baris \logo{...} di bawah.
+\newcommand{\pptlogo}{\includegraphics[height=0.7cm, keepaspectratio]{logo-telkom-vertikal.png}}
+\logo{\pptlogo}

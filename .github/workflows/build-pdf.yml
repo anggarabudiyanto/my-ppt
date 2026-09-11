@@ -69,13 +69,13 @@ jobs:
       - name: Lampirkan log/hasil ke branch (diagnosa)
         if: always()
         run: |
-          set -x
-          echo "::error::pwd=$(pwd) head=$(git rev-parse --short HEAD) ref=${{ github.ref_name }}"
+          # Batas anotasi per langkah = 10. Prioritas: baris error LaTeX.
           if [ -f template/main.log ]; then
-            echo "::error::main.log ADA"
-            tail -25 template/main.log | nl -ba | while IFS= read -r l; do echo "::error::LOG ${l:0:230}"; done
+            echo "::error::main.log $(wc -l < template/main.log) baris"
+            grep -n -m 6 -E "^! |Fatal error|Runaway|Emergency|\.tex:[0-9]+:" template/main.log | head -6 | while IFS= read -r l; do echo "::error::ERR ${l:0:230}"; done
+            echo "::error::AKHIR-LOG $(tail -3 template/main.log | tr '\n' ' | ' | head -c 230)"
           else
-            echo "::error::main.log TIDAK ADA"; ls -la template | head -20
+            echo "::error::main.log TIDAK ADA"; ls template | head -10
           fi
           git config user.name "arena-ai-coding-agent[bot]"
           git config user.email "arena-ai-coding-agent[bot]@users.noreply.github.com"
@@ -85,13 +85,12 @@ jobs:
           if [ -f template/main.pdf ]; then
             cp template/main.pdf ci/Template-Presentasi-Telkom-University.pdf
           fi
-          git add -A ci || echo "::error::git add gagal"
+          git add -A ci || true
           if git diff --cached --quiet; then
-            echo "::error::tidak ada yang bisa di-commit (staging kosong)"
+            echo "::error::STAGING-KOSONG (tidak ada file untuk di-commit)"
           else
-            git commit -m "CI: log & hasil kompilasi [skip ci]" || echo "::error::commit gagal"
-            out=$(git push origin HEAD:${{ github.ref_name }} 2>&1) || echo "::error::push gagal ${out:0:200}"
-            echo "::error::push: ${out:0:200}"
+            git commit -m "CI: log & hasil kompilasi [skip ci]" || echo "::error::commit-gagal"
+            out=$(git push origin HEAD:${{ github.ref_name }} 2>&1) && echo "::error::PUSH-OK ${out:0:180}" || echo "::error::PUSH-GAGAL ${out:0:180}"
           fi
 
       - name: Simpan PDF sebagai artifact

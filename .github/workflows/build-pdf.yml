@@ -46,6 +46,21 @@ jobs:
             texlive-bibtex-extra \
             biber
 
+      # PROBE: periksa apakah makro inti biblatex terdefinisi baik di distro ini
+      - name: Probe biblatex
+        working-directory: template
+        run: |
+          cat > /tmp/probe.tex <<'EOF'
+          \documentclass{article}
+          \usepackage[style=numeric,backend=biber]{biblatex}
+          \show\DeclareCiteCommand
+          \show\usebibmacro
+          \show\DeclareCiteCommandAlias
+          \begin{document}x\end{document}
+          EOF
+          pdflatex -interaction=nonstopmode -output-directory=/tmp /tmp/probe.tex > /tmp/probe.out 2>&1 || true
+          grep -A2 -E "macro:|undefined" /tmp/probe.out | head -12 | while IFS= read -r l; do echo "::error::PROBE ${l:0:230}"; done
+
       - name: Kompilasi (pdflatex -> biber -> pdflatex x2)
         working-directory: template
         run: |

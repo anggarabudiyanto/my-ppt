@@ -21,3 +21,7 @@ template/main.pdf
 
 # Folder ekstraksi/kerja sementara
 _ext/
+
+# Hasil diagnosa CI (log & PDF) — dikecualikan dari aturan di atas
+!ci/
+!ci/**

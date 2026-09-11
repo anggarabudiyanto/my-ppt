@@ -69,11 +69,10 @@ jobs:
       - name: Lampirkan log/hasil ke branch (diagnosa)
         if: always()
         run: |
-          # Batas anotasi per langkah = 10. Prioritas: baris error LaTeX.
+          # Batas anotasi per langkah = 10. Prioritas: baris error LaTeX
+          # (dengan satu baris konteks di atasnya).
           if [ -f template/main.log ]; then
-            echo "::error::main.log $(wc -l < template/main.log) baris"
-            grep -n -m 6 -E "^! |Fatal error|Runaway|Emergency|\.tex:[0-9]+:" template/main.log | head -6 | while IFS= read -r l; do echo "::error::ERR ${l:0:230}"; done
-            echo "::error::AKHIR-LOG $(tail -3 template/main.log | tr '\n' ' | ' | head -c 230)"
+            grep -n -B1 -m 4 -E "^! |Fatal error|Runaway|Emergency|\.(tex|sty|cls|clo|def):[0-9]+:" template/main.log | head -8 | while IFS= read -r l; do echo "::error::ERR ${l:0:230}"; done
           else
             echo "::error::main.log TIDAK ADA"; ls template | head -10
           fi

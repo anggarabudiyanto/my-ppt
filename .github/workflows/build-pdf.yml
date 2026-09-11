@@ -46,20 +46,42 @@ jobs:
             texlive-bibtex-extra \
             biber
 
-      # PROBE: periksa apakah makro inti biblatex terdefinisi baik di distro ini
-      - name: Probe biblatex
+      # PROBE: biseksi penyebab error — 4 varian dokumen uji
+      - name: Probe biseksi biblatex/beamer
         working-directory: template
         run: |
-          cat > /tmp/probe.tex <<'EOF'
-          \documentclass{article}
-          \usepackage[style=numeric,backend=biber]{biblatex}
-          \show\DeclareCiteCommand
-          \show\usebibmacro
-          \show\DeclareCiteCommandAlias
-          \begin{document}x\end{document}
+          mkdir -p /tmp/pb/v2
+          # V1: beamer + ppt.sty utuh (harusnya gagal seperti aslinya)
+          printf '%s\n' '\\documentclass[11pt,aspectratio=169]{beamer}' '\\usepackage{ppt}' '\\begin{document}\\begin{frame}uji\\end{frame}\\end{document}' > /tmp/pb/v1.tex
+          # V2: beamer + ppt.sty TANPA baris \xapptobibmacro
+          sed 's/^\\xapptobibmacro/%NOPATCH% \\xapptobibmacro/' ppt.sty > /tmp/pb/v2/ppt.sty
+          cp bib.bib /tmp/pb/v2/
+          printf '%s\n' '\\documentclass[11pt,aspectratio=169]{beamer}' '\\usepackage{ppt}' '\\begin{document}\\begin{frame}uji\\end{frame}\\end{document}' > /tmp/pb/v2/v2.tex
+          # V3: beamer + biblatex + xpatch + firstcite (inti masalah)
+          cat > /tmp/pb/v3.tex <<'EOF'
+          \documentclass[11pt,aspectratio=169]{beamer}
+          \usepackage[style=numeric,sorting=none,backend=biber]{biblatex}
+          \addbibresource{bib.bib}
+          \usepackage{xpatch}
+          \xapptobibmacro{cite}{\setunit{\nametitledelim}\printfield{title}\setunit{\nametitledelim}\printfield{year}}
+          \DeclareCiteCommand{\firstcite}
+            {\usebibmacro{prenote}}
+            {\footnotemark[\thefield{labelnumber}]}
+            {\multicitedelim}
+            {\usebibmacro{postnote}}
+          \begin{document}\begin{frame}uji \cite{barnett2009quantum}\end{frame}\end{document}
           EOF
-          pdflatex -interaction=nonstopmode -output-directory=/tmp /tmp/probe.tex > /tmp/probe.out 2>&1 || true
-          grep -A2 -E "macro:|undefined" /tmp/probe.out | head -12 | while IFS= read -r l; do echo "::error::PROBE ${l:0:230}"; done
+          # V4: seperti V3 tanpa \xapptobibmacro
+          grep -v '^\\\\xapptobibmacro' /tmp/pb/v3.tex > /tmp/pb/v4.tex || true
+          for v in v1 v2 v3 v4; do
+            if pdflatex -interaction=nonstopmode -output-directory=/tmp/pb /tmp/pb/$v.tex > /tmp/pb/$v.out 2>&1; then
+              echo "::error::$v = OK"
+            else
+              err=$(grep -m1 -E "^! |Undefined control" /tmp/pb/$v.out | head -c 180)
+              err2=$(grep -m1 -A1 "^! " /tmp/pb/$v.out | tail -1 | head -c 150)
+              echo "::error::$v = GAGAL: ${err} | konteks: ${err2}"
+            fi
+          done
 
       - name: Kompilasi (pdflatex -> biber -> pdflatex x2)
         working-directory: template

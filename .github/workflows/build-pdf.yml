@@ -54,6 +54,24 @@ jobs:
           pdflatex -interaction=nonstopmode -halt-on-error main.tex
           pdflatex -interaction=nonstopmode -halt-on-error main.tex
 
+      # Diagnosa: simpan log kompilasi (dan PDF bila sukses) ke folder ci/ di
+      # branch, sehingga bisa diperiksa tanpa mengunduh artifact. Commit ini
+      # TIDAK memicu workflow lagi (trigger hanya pada perubahan template/**).
+      - name: Lampirkan log/hasil ke branch (diagnosa)
+        if: always()
+        run: |
+          git config user.name "arena-ai-coding-agent[bot]"
+          git config user.email "arena-ai-coding-agent[bot]@users.noreply.github.com"
+          mkdir -p ci
+          [ -f template/main.log ] && cp template/main.log ci/main.log
+          [ -f template/main.blg ] && cp template/main.blg ci/main.blg
+          if [ -f template/main.pdf ]; then
+            cp template/main.pdf ci/Template-Presentasi-Telkom-University.pdf
+          fi
+          git add ci
+          git commit -m "CI: lampiran log & hasil kompilasi [skip ci]" || echo "tidak ada perubahan"
+          git push origin HEAD:${{ github.ref_name }}
+
       - name: Simpan PDF sebagai artifact
         uses: actions/upload-artifact@v4
         with:

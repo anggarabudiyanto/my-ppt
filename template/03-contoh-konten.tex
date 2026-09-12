@@ -1,0 +1,594 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  03-CONTOH-KONTEN.TEX — KAMUS CONTOH SEMUA FITUR TEMPLATE
+%  -----------------------------------------------------------------------------
+%  Berkas ini adalah "kamus contoh": setiap slide memperagakan SATU fitur yang
+%  biasa dipakai saat menulis presentasi, lengkap dengan komentar cara menulis
+%  kode dan notasinya. Salin (cuplikan) slide yang Anda butuhkan ke berkas bab
+%  Anda sendiri, ganti teksnya, hapus berkas ini jika sudah tidak dipakai.
+%
+%  SETIAP SLIDE DIorganisasi sebagai:
+%    \section{NAMA BAB}      <- membuka bab (muncul di navigasi & daftar isi)
+%    \begin{frame}           <- satu slide
+%      \frametitle{JUDUL}    <- judul slide
+%      ...isi...
+%    \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%===============================================================================
+% BAB 1 : PENGENALAN
+%===============================================================================
+\section{Pengenalan Template}
+
+%-------------------------------------------------------------------------------
+% SLIDE : "Tentang Template Ini"
+% Fitur yang dipakai : frame biasa + itemize + blok peringatan (alertblock)
+%-------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Tentang Template Ini}
+
+  % itemize = daftar berbutir. \item = satu butir. Tingkat kedua cukup
+  % menuliskan \begin{itemize} di dalam \item sebelumnya (bersarang).
+  \begin{itemize}
+    \item Template presentasi \penekanan{LaTeX Beamer} rasio 16:9 dengan
+          identitas \istilah{Telkom University -- AICOMS}:
+          \begin{itemize}
+            \item judul, penulis, institusi, tanggal diatur di \texttt{konfigurasi.tex};
+            \item warna, logo, footer, dan font diatur di \texttt{ppt.sty};
+            \item konten slide ditulis di berkas \texttt{0X-*.tex} terpisah.
+          \end{itemize}
+    \item Slide ini adalah \penekanan{kamus contoh} --- salin cuplikan yang
+          Anda butuhkan, lalu ganti teksnya dengan konten Anda.
+    \item Semua perintah penting dicetak \emph{tebal} dalam komentar kode
+          di berkas sumber (\texttt{.tex}), contoh:
+
+          % begin{lstlisting} menampilkan KODE APA ADAPUN (tanpa diproses LaTeX).
+          % Di dalamnya, tanda % tidak lagi menjadi komentar — aman untuk
+          % menampilkan cuplikan LaTeX apa pun.
+          \begin{lstlisting}
+\begin{frame}          % mulai satu slide
+  \frametitle{Judul}   % judul slide
+  Halo, dunia!         % isi slide
+\end{frame}            % akhir slide
+          \end{lstlisting}
+  \end{itemize}
+
+  % alertblock = kotak berlatar jingga untuk PERINGATAN/hal penting.
+  % (block = emas, block alerted = jingga, block example = biru — lihat slide
+  %  "Kolom & Blok".)
+  \begin{alertblock}{Penting}
+    Tidak perlu menghafal semua perintah: buka berkas contoh, salin, ubah!
+  \end{alertblock}
+\end{frame}
+
+%===============================================================================
+% BAB 2 : TEKS & DAFTAR
+%===============================================================================
+\section{Teks \& Daftar}
+
+%-------------------------------------------------------------------------------
+% SLIDE : "Memformat Teks"
+% Fitur : penekanan teks, ukuran font lokal, jenis huruf, istilah asing
+%-------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Memformat Teks}
+
+  % {\small ...} dsb. : ubah ukuran font HANYA untuk teks di dalam kurung kurawal.
+  % Ukuran (besar->kecil): \Huge \huge \LARGE \Large \large \normalsize \small
+  %                       \footnotesize \scriptsize \tiny
+  {\large Teks besar (\texttt{\textbackslash large})} --- untuk penekanan judul kecil.\\
+  Teks normal (\texttt{\textbackslash normalsize}) --- ukuran bawaan slide.\\
+  {\footnotesize Teks kecil (\texttt{\textbackslash footnotesize}) --- untuk keterangan.}\\
+  {\scriptsize Teks sangat kecil (\texttt{\textbackslash scriptsize}) --- hindari bila bisa.}
+
+  \medskip
+  % Penekanan gaya teks:
+  \textbf{Cetak tebal} $\bullet$
+  \emph{Cetak miring (istilah asing)} $\bullet$
+  \texttt{font mesin ketik (kode)} $\bullet$
+  \underline{garis bawah} $\bullet$
+  \sout{dicoret} % \sout dari paket ulem (dimuat di ppt.sty)
+
+  \medskip
+  % Warna teks: \textcolor{namaWarna}{teks}. Warna siap pakai dari ppt.sty:
+  % telu (merah Telkom), emas, biruTua, merah, abuHijau, ...
+  \textcolor{telu}{Teks merah TELU}, \textcolor{emas}{teks emas},
+  \textcolor{biruTua}{teks biru tua}.
+
+  \medskip
+  % Perataan rata kiri-kanan (\justifying) untuk paragraf panjang:
+  \begin{justify}
+    Paragraf panjang sebaiknya memakai \texttt{\textbackslash justifying} agar
+    rata kiri-kanan seperti pada jurnal: berisi kalimat contoh yang cukup panjang
+    untuk menunjukkan efek pemenggalan baris secara otomatis oleh LaTeX.
+  \end{justify}
+
+  \medskip
+  % Makro bantu bawaan template (didefinisikan di ppt.sty bagian 8):
+  %   \penekanan{...}  -> tebal merah TELU     \istilah{...} -> miring
+  %   \sel{...}        -> matematika dalam kalimat, contoh: \sel{S(\rho)=1}
+  \penekanan{\textbackslash penekanan\{...\}} untuk kata penting,
+  \istilah{\textbackslash istilah\{...\}} untuk istilah asing, dan
+  \texttt{\textbackslash sel\{...\}} untuk matematika dalam kalimat, misalnya
+  \sel{S(\rho_A) = 1}.
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE : "Menulis Daftar (Bullet & Penomoran)"
+% Fitur : itemize bersarang, enumerate, penanda khusus $\Rightarrow$
+%-------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Menulis Daftar (Bullet \& Penomoran)}
+
+  \begin{columns}[T]
+    %--- KOLOM KIRI : contoh itemize & enumerate --------------------------------
+    \begin{column}{0.48\textwidth}
+      {\small\textbf{Itemize} (tanpa nomor)}
+      \begin{itemize}
+        \item Tingkat pertama
+          \begin{itemize}
+            \item Tingkat kedua
+              \begin{itemize}
+                \item Tingkat ketiga
+              \end{itemize}
+          \end{itemize}
+        \item Butir berikutnya
+      \end{itemize}
+
+      \medskip
+      {\small\textbf{Enumerate} (bernomor)}
+      \begin{enumerate}
+        \item Langkah pertama
+        \item Langkah kedua
+        \item Langkah ketiga
+      \end{enumerate}
+    \end{column}
+
+    %--- KOLOM KANAN : kode sumbernya -------------------------------------------
+    \begin{column}{0.48\textwidth}
+      {\small\textbf{Kode sumbernya}}
+      \begin{lstlisting}
+% daftar berbutir
+\begin{itemize}
+  \item Tingkat pertama
+  % bersarang = tingkat kedua
+  \begin{itemize}
+    \item Tingkat kedua
+  \end{itemize}
+\end{itemize}
+
+% daftar bernomor
+\begin{enumerate}
+  \item Langkah pertama
+  \item Langkah kedua
+\end{enumerate}
+      \end{lstlisting}
+
+      % \item[$\Rightarrow$] : mengganti bullet menjadi panah.
+      {\small\textbf{Bullet panah:} \texttt{\textbackslash item[\$\textbackslash Rightarrow\$]}}
+      \begin{itemize}
+        \item[$\Rightarrow$] butir dengan penanda panah;
+        \item[$\Rightarrow$] cocok untuk poin ringkas.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%===============================================================================
+% BAB 3 : KOLOM & BLOK
+%===============================================================================
+\section{Kolom \& Blok}
+
+%-------------------------------------------------------------------------------
+% SLIDE : "Layout Dua Kolom & Blok Penyorotan"
+% Fitur : columns/column, block, alertblock, exampleblock
+%-------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Layout Dua Kolom \& Blok}
+
+  % columns[T] : dua kolom sejajar rata-atas (T = top).
+  % column{0.48\textwidth} : lebar kolom 48% dari lebar teks slide.
+  % \hfill : ruang mengembang di antara kedua kolom (jarak tengah).
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      % block : informasi PENTING umum (latar emas)
+      \begin{block}{Block (emas)}
+        Untuk definisi, rumus kunci, atau poin utama.
+      \end{block}
+
+      % alertblock : PERINGATAN (latar jingga)
+      \begin{alertblock}{Alertblock (jingga)}
+        Untuk peringatan, kesalahan umum, batasan.
+      \end{alertblock}
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+      % exampleblock : CONTOH (latar biru tua)
+      \begin{exampleblock}{Exampleblock (biru)}
+        Untuk contoh, studi kasus, ilustrasi.
+      \end{exampleblock}
+
+      \medskip
+      % minipage : kotak teks lebar tertentu — alternatif ringan tanpa judul blok
+      {\small\itshape Ket: \texttt{minipage} = kotak teks biasa dengan lebar
+       tertentu, tanpa judul — praktis untuk keterangan di samping gambar.}
+    \end{column}
+  \end{columns}
+
+  \medskip
+  % Kode kerangka dua kolom — salin dan isi bagian "..." :
+  % (opsi basicstyle mengecilkan font listing ini saja menjadi \tiny)
+  \begin{lstlisting}[basicstyle=\ttfamily\tiny]
+\begin{columns}[T]                    % [T] = rata atas
+  \begin{column}{0.48\textwidth}      % kolom kiri 48%
+    ...isi kolom kiri...
+  \end{column}
+  \hfill
+  \begin{column}{0.48\textwidth}      % kolom kanan 48%
+    ...isi kolom kanan...
+  \end{column}
+\end{columns}
+  \end{lstlisting}
+\end{frame}
+
+%===============================================================================
+% BAB 4 : GAMBAR & TABEL
+%===============================================================================
+\section{Gambar \& Tabel}
+
+%-------------------------------------------------------------------------------
+% SLIDE : "Menyisipkan Gambar"
+% Fitur : figure + includegraphics + caption + label + \ref
+%-------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Menyisipkan Gambar}
+
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      % figure : lingkungan gambar bernomor otomatis.
+      %   \centering                  -> gambar di tengah
+      %   \includegraphics[width=...] -> lebar gambar (0.9\textwidth = 90% kolom)
+      %   \caption{...}               -> keterangan bernomor "Gambar N."
+      %   \label{fig:nama}            -> nama acuan; NAMA BOLEH BEBAS & UNIK
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.9\textwidth]{entanglement.png}
+        \caption{Contoh gambar: konsep \istilah{quantum entanglement} pada pasangan
+                 qubit Bell.}
+        \label{fig:entanglement}
+      \end{figure}
+    \end{column}
+    \hfill
+    \begin{column}{0.42\textwidth}
+      % Penempatan gambar: berkas cukup disebut NAMA TANPA EKSTENSI karena
+      % folder assets/ sudah didaftarkan di \graphicspath (ppt.sty).
+      \begin{itemize}
+        \item Lebar umum: \texttt{width=0.5\textbackslash textwidth},
+              \texttt{width=\textbackslash linewidth}, atau tinggi:
+              \texttt{height=3cm} + \texttt{keepaspectratio}.
+        \item Format yang didukung: \texttt{.png}, \texttt{.jpg}, \texttt{.pdf}.
+        \item Rujuk gambar dengan \texttt{\textbackslash ref}: hasilnya
+              ``Gambar~\ref{fig:entanglement}''.
+      \end{itemize}
+      \begin{alertblock}{Tips}
+        Nomor \& keterangan dibuat otomatis --- jangan menulis ``Gambar 1'' secara manual!
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE : "Membuat Tabel"
+% Fitur : table + tabular + booktabs + caption + label
+%-------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Membuat Tabel}
+
+  % table  : lingkungan tabel bernomor otomatis (keterangan "Tabel N.")
+  % tabular{...} : definisi kolom — l kiri, c tengah, r kanan; | garis vertikal
+  % \toprule/\midrule/\bottomrule (booktabs) : garis horizontal rapi gaya jurnal
+  % &  : pemisah sel        \\ : pindah baris
+  \begin{table}
+    \centering
+    \caption{Perkembangan generasi seluler (contoh tabel).}
+    \label{tab:generasi}
+    \small
+    \begin{tabular}{lccl}
+      \toprule
+      Generasi & Teknologi & Kecepatan puncak & Tahun \\
+      \midrule
+      2G & GSM  & 9,6 kbps & 1991 \\
+      4G & LTE  & 100 Mbps & 2009 \\
+      5G & NR   & 10 Gbps  & 2019 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{lstlisting}[basicstyle=\ttfamily\tiny]
+\begin{table}
+ \centering
+ \caption{Judul tabel}
+ \label{tab:nama}
+ \begin{tabular}{lccl}
+  \toprule
+  A & B & C & D \\
+  \midrule
+  1 & 2 & 3 & 4 \\
+  \bottomrule
+ \end{tabular}
+\end{table}
+      \end{lstlisting}
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+      \begin{itemize}
+        \item Rujuk tabel: ``Tabel~\ref{tab:generasi}''.
+        \item Sel menggabung baris: paket \texttt{multirow}; tabel yang lebar
+              dibungkus \texttt{adjustbox} (keduanya sudah dimuat di
+              \texttt{ppt.sty}).
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%===============================================================================
+% BAB 5 : MATEMATIKA
+%===============================================================================
+\section{Matematika}
+
+%-------------------------------------------------------------------------------
+% SLIDE : "Menulis Persamaan"
+% Fitur : matematika inline, equation bernomor + \label, align banyak baris,
+%         matriks (bmatrix), fungsi tr (DeclareMathOperator)
+%-------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Menulis Persamaan}
+
+  % (1) MATEMATIKA DALAM KALIMAT : diapit \sel{...} atau $...$
+ %      contoh: entropi maksimum dua keadaan adalah \sel{S = 1} bit.
+  Entropi maksimum satu qubit adalah \sel{S\!\left(\tfrac{1}{2}I\right) = 1} bit,
+  sedangkan keadaan murni punya \sel{S(\ket{\psi}) = 0}.
+
+  \medskip
+  % (2) PERSAMAAN BERNOMOR : equation + \label{eq:nama}; dirujuk \equ~\ref{eq:...}
+  %     \equ adalah makro yang mencetak kata "Persamaan" (ppt.sty).
+  \begin{equation}
+    S(\rho) = -\tr\!\left(\rho \log_2 \rho\right)
+    \label{eq:entropi-vonneumann}
+  \end{equation}
+  \equ~\ref{eq:entropi-vonneumann} adalah entropi von Neumann untuk matriks
+  densitas \sel{\rho}; huruf \texttt{\textbackslash tr} dicetak tegak karena
+  didefinisikan dengan \texttt{\textbackslash DeclareMathOperator}.
+
+  \medskip
+  % (3) PERSAMAAN BANYAK BARIS : align* (tanpa nomor) — & menandai titik
+  %     penyelarasan, \\ memindah baris. Gunakan align (tanpa bintang) bila
+  %     setiap baris ingin diberi nomor.
+  \begin{align*}
+    \ket{\psi} &= \cos\!\left(\frac{\theta}{2}\right)\ket{0}
+                 + e^{i\phi}\sin\!\left(\frac{\theta}{2}\right)\ket{1} \\
+    \rho &= \ket{\psi}\bra{\psi}
+          = \frac{1}{2}
+            \begin{bmatrix}
+              1 & e^{-i\phi} \\
+              e^{i\phi} & 1
+            \end{bmatrix}
+  \end{align*}
+
+  % (4) Kasus terpisah (kurung kurawal) bila dibutuhkan:
+  %     \begin{cases} ... & ... \\ ... & ... \end{cases}  (di dalam equation)
+\end{frame}
+
+%===============================================================================
+% BAB 6 : NOTASI KUANTUM
+%===============================================================================
+\section{Notasi Kuantum}
+
+%-------------------------------------------------------------------------------
+% SLIDE : "Notasi Dirac (Ket-Bra)"
+% Fitur : \ket \bra \braket \ketsub (dari paket braket + makro ppt.sty)
+%-------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Notasi Dirac (Ket--Bra)}
+
+  % PAKET braket menyediakan:  \ket{x} -> |x⟩   \bra{x} -> ⟨x|
+  %   \braket{a|b} -> ⟨a|b⟩    \ket{a}\!\bra{b} -> |a⟩⟨b|
+  % MAKRO \ketsub{psi}{AB} (ppt.sty) menuliskan |ψ⟩_AB — subskrip sistem.
+  % PENTING: subskrip diletakkan DI LUAR \ket{...}, bukan di dalam kurungnya:
+  %   BENAR : \ket{\psi}_{AB}   SALAH : \ket{\psi_{AB}}  (subskrip ikut tercetak
+  %             di dalam ket, tipografi & maknanya keliru)
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{itemize}
+        \item Keadaan dasar qubit:
+              \sel{\ket{0},\ \ket{1}}
+        \item Superposisi (Bell):
+              \sel{\ketsub{\psi}{AB} = \tfrac{1}{\sqrt{2}}\left(\ket{00}+\ket{11}\right)}
+        \item Proyeksi \& dual:
+              \sel{\bra{0},\ \ket{0}\!\bra{0},\ \braket{0|1} = 0}
+        \item Operator evolusi unitari:
+              \sel{\hat{U}\hat{U}^{\dagger} = \hat{I} = \hat{U}^{\dagger}\hat{U}}
+      \end{itemize}
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+      % Contoh penerapan lengkap: matriks densitas & partial trace.
+      % {\small ...} mengecilkan font HANYA untuk blok persamaan ini agar muat.
+      {\small
+      Matriks densitas dan \istilah{partial trace}:
+      \begin{align*}
+        \rho_{AB} &= \ketsub{\psi}{AB}\brasub{\psi}{AB} \\
+        \rho_A    &= \tr_B(\rho_{AB}) \equiv \tfrac{1}{2} I_A \\
+        S(\rho_A) = S(\rho_B) &= 1 \\
+        S(\rho_A|\rho_B) &= S(\rho_{AB}) - S(\rho_B) = -1
+      \end{align*}}
+      \begin{lstlisting}[basicstyle=\ttfamily\tiny]
+\ketsub{\psi}{AB}      % |psi>_AB
+\brasub{\psi}{AB}      % <psi|_AB
+\rho = \ket{\psi}\bra{\psi}
+\tr_B(\rho_{AB})       % partial trace
+\hat{U}^{\dagger}      % transpose konjugat
+      \end{lstlisting}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%===============================================================================
+% BAB 7 : KODE PROGRAM
+%===============================================================================
+\section{Kode Program}
+
+%-------------------------------------------------------------------------------
+% SLIDE : "Menampilkan Kode Program"
+% Fitur : lingkungan pptcode (listings) + \lstinline untuk kode dalam kalimat
+%-------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Menampilkan Kode Program}
+
+  % pptcode{JUDUL} = lingkungan bingkai kode dengan judul (didefinisikan di
+  % ppt.sty di atas paket listings). Isi di antara begin/end ditampilkan APA
+  % ADAPUN (tidak diproses sebagai LaTeX) dengan pewarnaan sintaks otomatis.
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{pptcode}{Simulasi qubit (Python)}
+# superposisi sederhana
+import numpy as np
+
+ket0 = np.array([1, 0])   # |0>
+ket1 = np.array([0, 1])   # |1>
+H = np.array([[1,  1],    # Hadamard
+              [1, -1]]) / np.sqrt(2)
+
+psi = H @ ket0            # |psi> = H|0>
+prob = np.abs(psi)**2     # peluang ukur
+print("P(|0>) =", prob[0])
+      \end{pptcode}
+    \end{column}
+    \hfill
+    \begin{column}{0.44\textwidth}
+      \begin{itemize}
+        \item Ganti bahasa dengan opsi:
+              \texttt{\textbackslash begin\{lstlisting\}[language=C++]}
+        \item Bahasa umum yang didukung \texttt{listings}: Python, C, C++, Java,
+              MATLAB, R, HTML, SQL, dan lain-lain.
+        \item Kode pendek dalam kalimat:
+              \lstinline|def f(x): return x| ---
+              ditulis dengan \texttt{\textbackslash lstinline|...|}.
+        \item Warna kata kunci/komentar/string diatur di blok
+              ``\texttt{TAMPILAN KODE PROGRAM}'' pada \texttt{ppt.sty}.
+      \end{itemize}
+      \begin{alertblock}{Tips}
+        Kode panjang: kecilkan dengan \texttt{\textbackslash scriptsize} di dalam
+        lingkungan, atau tampilkan per bagian agar terbaca dari kursi belakang.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%===============================================================================
+% BAB 8 : KUTIPAN & REFERENSI
+%===============================================================================
+\section{Kutipan \& Referensi}
+
+%-------------------------------------------------------------------------------
+% SLIDE : "Mengutip Referensi"
+% Fitur : \cite, \footcite, \firstcite, \secondcite (+ definisi entri di bib.bib)
+%-------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Mengutip Referensi}
+  % {\footnotesize ...} : seluruh isi frame dibuat lebih kecil agar muat
+  % sekaligus menyisakan ruang untuk footnote referensi di bawah.
+  {\footnotesize
+  % Empat perintah kutipan (entri didefinisikan di berkas bib.bib):
+  %   \cite{kunci}       -> [angka] ringkas di dalam teks
+  %   \footcite{kunci}   -> footnote ringkas berisi nomor referensi
+  %   \firstcite{kunci}  -> footnote LENGKAP (entri penuh) — kutipan pertama
+  %   \secondcite{kunci} -> footnote ringkas — saat mengutip ulang
+  \begin{itemize}
+    \item \textbf{\texttt{\textbackslash cite}} --- sitasi dalam teks:
+          teori informasi kuantum \cite{barnett2009quantum} dan kapasitas kanal \cite{djordjevic2019physical}.
+    \item \textbf{\texttt{\textbackslash footcite}} --- referensi di kaki slide:
+          eksperimen ketimpangan Bell\footcite{aspect1999bell}.
+    \item \textbf{\texttt{\textbackslash firstcite}} --- footnote lengkap pertama kali:
+          kodetan Slepian--Wolf\firstcite{slepian1973noiseless}.
+    \item \textbf{\texttt{\textbackslash secondcite}} --- mengutip ulang, tampil nomornya saja:
+          kodetan Slepian--Wolf\secondcite{slepian1973noiseless}.
+  \end{itemize}
+
+  \medskip
+  % Menambah referensi: salin templat @book/@article/@online dari bib.bib,
+  % ganti kuncinya, lalu kutip. Slide "REFERENSI" (04-referensi.tex) mengisi
+  % otomatis dari berkas ini.
+  \begin{block}{Menambah referensi baru}
+    Buka \texttt{bib.bib} $\rightarrow$ salin templat entri $\rightarrow$ ganti kunci
+    \& isi $\rightarrow$ panggil \texttt{\textbackslash cite\{kunciAnda\}} di slide.
+  \end{block}}
+\end{frame}
+
+%===============================================================================
+% BAB 9 : ANIMASI & TIPS
+%===============================================================================
+\section{Animasi \& Tips}
+
+%-------------------------------------------------------------------------------
+% SLIDE : "Efek Bertahap (Animasi)"
+% Fitur : \pause dan spesifikasi overlay <2->
+%-------------------------------------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Efek Bertahap (Animasi)}
+
+  % \pause : semua konten SETELAH perintah ini baru muncul pada klik berikutnya.
+  % \item<2-> : butir baru tampil mulai "slide ke-2" (overlay beamer).
+  \begin{itemize}
+    \item Butir ini tampil sejak awal.
+    \pause
+    \item Butir ini muncul setelah satu klik (\texttt{\textbackslash pause}).
+    \item<3-> Butir ini muncul pada klik ketiga (\texttt{\textbackslash item<3->}).
+    \item<4-> Gunakan secara terukur --- animasi berlebihan mengganggu.
+  \end{itemize}
+
+  \medskip
+  \begin{lstlisting}
+\begin{itemize}
+  \item tampil sejak awal
+  \pause                 % klik ke-2
+  \item muncul setelah klik
+  \item<3->              % mulai klik ke-3
+\end{itemize}
+  \end{lstlisting}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE : "Tips Tata Letak (Checklist)"
+% Fitur : ringkasan praktik baik — block + itemize dua kolom
+%-------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Tips Tata Letak (Checklist)}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Lakukan}
+        \begin{itemize}
+          \item Satu gagasan utama per slide.
+          \item Font lokal \texttt{\textbackslash small}/\texttt{\textbackslash footnotesize}
+                bila padat --- jangan \texttt{\textbackslash tiny} untuk isi utama.
+          \item Pecah konten panjang menjadi beberapa frame.
+          \item Gunakan \texttt{\textbackslash label}/\texttt{\textbackslash ref}
+                untuk semua rujukan.
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+      \begin{alertblock}{Hindari}
+        \begin{itemize}
+          \item Teks melebihi area slide (\istilah{overfull}).%
+                % Cek log kompilasi: "Overfull \vbox" berarti slide penuh.
+          \item Menulis nomor gambar/tabel/rumus secara manual.
+          \item Subskrip di dalam \texttt{\textbackslash ket\{...\}}.
+          \item Spasi pada nama berkas gambar (pakai tanda hubung \texttt{-}).
+        \end{itemize}
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}

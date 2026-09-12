@@ -1,0 +1,299 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  PPT.STY — Paket gaya (style) utama Template Presentasi Beamer
+%  (Terinspirasi VT Presentation Template & THU Beamer Theme; dikembangkan
+%   untuk identitas Telkom University / AICOMS oleh Anggara Budiyanto,
+%   lalu dirapikan & didokumentasikan ulang agar mudah dipakai siapa pun.)
+%
+%  CARA PAKAI  : cukup \usepackage{ppt} di main.tex — JANGAN mengedit file ini
+%                untuk mengubah isi presentasi. Pengaturan identitas (judul,
+%                penulis, logo) ada di konfigurasi.tex.
+%  VERSI       : 2.0 (2026, perapian dokumentasi & perbaikan bug)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%===============================================================================
+% 1) PAKET DASAR
+% -----------------------------------------------------------------------------
+% Komentar di file ini menjelaskan FUNGSI tiap blok. Aturan umum penulisan
+% komentar proyek ini:
+%   %  << dua spasi + teks  = penjelasan singkat 1 baris
+%   ---- pembatas berisi judul blok, supaya file mudah dinavigasi (C-s di editor)
+%===============================================================================
+
+\usepackage{xcolor}      % definisi & pencampuran warna (telu!50, abu2!20, dst.)
+\usepackage{transparent} % mengatur transparansi gambar (\transparent{0.2})
+\usepackage{graphicx}    % wajib: menyisipkan gambar (\includegraphics)
+\usepackage{adjustbox}   % menyesuaikan ukuran tabel/gambar otomatis
+\usepackage{tikz}        % menggambar diagram vektor langsung di LaTeX
+\usepackage{booktabs}    % tabel rapi bergaya akademik (\toprule \midrule \bottomrule)
+\usepackage{array}       % kolom tabel tipe tetap (p{}, m{}, b{})
+\usepackage{multirow}    % menggabungkan sel tabel secara vertikal
+\usepackage{caption}     % kustomisasi keterangan gambar/tabel
+\usepackage{ragged2e}    % perataan rata kiri-kanan yang rapi (\justifying)
+\usepackage{listings}    % menampilkan KODE PROGRAM dengan pewarnaan sintaks
+\usepackage[normalem]{ulem} % coretan \sout{}; opsi normalem menjaga \emph tetap miring
+% CATATAN: paket `enumitem` sengaja TIDAK dimuat — bentrok dengan spesifikasi
+% overlay beamer seperti \item<2-> (animasi bertahap).
+\usepackage[scaled=0.95]{helvet} % font sans-serif Helvetica untuk teks slide
+\usepackage[T1]{fontenc} % encoding font modern (tanda minus, kutip, dll. benar)
+\usepackage{textcomp}    % simbol teks tambahan (™, °, dsb.)
+
+% --- Matematika ---------------------------------------------------------------
+% amsmath wajib dimuat SEBELUM mathtools. braket menyediakan \ket{...} dan
+% \bra{...} untuk notasi Dirac mekanika-kuantum.
+\usepackage{amsmath}     % lingkungan equation, align, cases, \text{} di matem.
+\usepackage{amssymb}     % simbol matematis tambahan (\mathbb, \gtrless, ...)
+\usepackage{mathtools}   % perluasan amsmath (dcases, \DeclarePairedDelimiter)
+\usepackage{braket}      % notasi Dirac: \ket{}, \bra{}, \braket{}, \ketbra{}
+\usepackage{bm}          % huruf tebal matematis: \bm{v} untuk vektor
+
+%--- CATATAN MIGRASI NOTASI KUANTUM --------------------------------------------
+% Proyek asli menyertakan paket eksternal "quantum.sty" (Toby Cubitt). Paket
+% tersebut TIDAK dibutuhkan lagi: notasi Dirac sekarang cukup dari `braket`
+% (standar & tersedia di semua instalasi TeX). Jika Anda memiliki dokumen lama
+% yang memakai perintah khas quantum.sty seperti \ket[label]{...}, gunakan
+% padanan berikut (sudah disediakan di blok MAKRO di bawah):
+%   \ket[AB]{\psi}  ->  \ket{\psi}_{AB}   (subskrip diletakkan langsung)
+%===============================================================================
+
+%===============================================================================
+% 2) LOKASI GAMBAR
+% -----------------------------------------------------------------------------
+% \graphicspath memberi tahu LaTeX daftar folder tempat berkas gambar dicari,
+% berurutan. Dengan pengaturan di bawah, cukup tulis:
+%     \includegraphics[width=.5\textwidth]{contoh-diagram}
+% tanpa perlu menulis "assets/..." — LaTeX otomatis mencarinya di assets/.
+% Simpan gambar baru Anda ke folder assets/ (atau buat subfolder dan daftarkan
+% di sini). Nama berkas DISARANKAN tanpa spasi: pakai tanda hubung "-".
+%===============================================================================
+\graphicspath{{assets/}{assets/logo/}{assets/diagram/}}
+
+%===============================================================================
+% 3) BAHASA & KETERANGAN GAMBAR/TABEL
+% -----------------------------------------------------------------------------
+% Keterangan gambar dicetak "Gambar N." dan tabel "Tabel N." (bahasa Indonesia)
+% agar konsisten dengan skripsi/laporan Telkom University. Nomor N dihitung
+% OTOMATIS oleh LaTeX — jangan pernah menulis nomor secara manual.
+%===============================================================================
+\DeclareCaptionLabelFormat{ppt-fig}{Gambar #2.\hspace{0.3em}}  % label khusus gambar
+\DeclareCaptionLabelFormat{ppt-tab}{Tabel #2.\hspace{0.3em}}   % label khusus tabel
+\DeclareCaptionLabelSeparator{ppt-sep}{\hspace{0.2em}}         % jarak label–teks
+\captionsetup[figure]{labelformat=ppt-fig, labelsep=ppt-sep, font=small}
+\captionsetup[table]{labelformat=ppt-tab, labelsep=ppt-sep, font=small}
+% Gambar: keterangan di BAWAH ; Tabel: keterangan di ATAS (konvensi akademik).
+\captionsetup[figure]{position=below}
+\captionsetup[table]{position=above}
+
+% Nomor gambar/tabel sederhana: 1, 2, 3, ... (berurutan lintas slide, tanpa bab).
+% Catatan: di kelas beamer tidak ada counter "chapter"; penomoran lama
+% "\arabic{chapter}.\arabic{figure}" menghasilkan angka salah (selalu 0.n).
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+
+% Kata "Persamaan" untuk merujuk: tulis \equ~\ref{eq:nama} -> "Persamaan 5"
+\newcommand{\equ}{Persamaan}
+
+%===============================================================================
+% 4) KUTIPAN & FOOTNOTE REFERENSI (biblatex + biber)
+% -----------------------------------------------------------------------------
+% Gaya numeric (angka). Perintah yang tersedia di konten slide:
+%   \cite{kunci}        -> [3]     (sitasi ringkas dalam teks)
+%   \footcite{kunci}    -> footnote ringkas berisi nomor referensi
+%   \firstcite{kunci}   -> footnote LENGKAP berisi entri referensi (kutipan 1x)
+%   \secondcite{kunci}  -> footnote ringkas (kutipan berikutnya)
+% Semua entri referensi didefinisikan di berkas bib.bib.
+%
+% CATATAN TEKNIS: \firstcite dan \secondcite adalah alias untuk makro bawaan
+% biblatex (\footfullcite dan \footcite). Versi lama template mendefinisikan
+% keduanya dengan \DeclareCiteCommand + \footnotemark manual — pendekatan ini
+% rapuh terhadap versi biblatex/beamer tertentu (gagal "Undefined control
+% sequence" pada TeX Live 2023 + beamer), sehingga diganti mekanisme bawaan
+% yang stabil. Nama perintah dipertahankan agar dokumen lama tetap kompatibel.
+%===============================================================================
+\usepackage[style=numeric, sorting=none, backend=biber]{biblatex}
+\addbibresource{bib.bib}                 % <-- daftar pustaka: berkas bib.bib
+\setbeamerfont{footnote}{size=\tiny}     % footnote referensi dibuat kecil
+
+\newcommand{\firstcite}{\footfullcite}   % footnote referensi lengkap
+\newcommand{\secondcite}{\footcite}      % footnote ringkas (nomor)
+
+%===============================================================================
+% 5) TEMA, WARNA, DAN UKURAN SLIDE
+% -----------------------------------------------------------------------------
+% Rasio 16:9 sudah diatur di main.tex (\documentclass[aspectratio=169]).
+% Tema dasar "Madrid" + outer theme "miniframes" (garis navigasi atas).
+%===============================================================================
+\usetheme{Madrid}
+\useinnertheme{circles}     % penanda bullet berbentuk lingkaran
+\useoutertheme{miniframes}  % bar navigasi seksi di kepala slide
+
+%--- PALET WARNA ---------------------------------------------------------------
+% fg = warna teks (foreground), bg = warna latar (background).
+% Untuk mengganti identitas warna institusi, cukup ubah 4 definisi warna ini.
+\definecolor{biruTua}{RGB}{21, 28, 85}     % biru tua  — aksen struktur/tema
+\definecolor{emas}{RGB}{198, 146, 0}       % emas      — warna utama footer
+\definecolor{telu}{RGB}{148, 0, 0}         % merah TELU — warna khas Telkom Univ.
+\definecolor{merah}{RGB}{255, 0, 0}        % merah terang — penekanan/atribut
+\definecolor{abu}{RGB}{211, 211, 211}      % abu terang — latar kotak tanggal
+\definecolor{abuHijau}{RGB}{47, 79, 79}    % abu kehijauan — bilah judul slide
+\definecolor{abu2}{RGB}{241, 241, 241}     % abu sangat terang — kotak judul kaki
+
+\setbeamercolor*{structure}{bg=biruTua, fg=biruTua}
+\setbeamercolor*{palette primary}{use=structure, fg=telu, bg=abu}     % kotak kiri bawah & bar judul
+\setbeamercolor*{palette secondary}{use=structure, fg=white, bg=telu} % kotak tengah bawah
+\setbeamercolor*{palette tertiary}{use=structure, fg=white, bg=biruTua}
+
+%--- BILAH JUDUL SLIDE ---------------------------------------------------------
+% Latar abu-kehijauan gelap dengan teks PUTIH agar kontras jelas.
+% (Perbaikan: sebelumnya fg=merah di atas bg=abuHijau — kontras sangat buruk.)
+\setbeamercolor{frametitle}{bg=abuHijau, fg=white}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamercolor{titlelike}{parent=palette primary}
+
+%--- KAKI (FOOTER) TIGA BAGIAN -------------------------------------------------
+% [ nama penulis | judul singkat | tanggal + nomor slide ]
+% Teks "nama penulis" & "judul singkat" diatur lewat argumen opsional braket [
+% ] pada \author[...] dan \title[...] di konfigurasi.tex.
+\setbeamercolor{ppt kaki nama}{fg=white, bg=telu}
+\setbeamercolor{ppt kaki judul}{fg=telu, bg=abu2}
+\setbeamercolor{ppt kaki tanggal}{fg=telu, bg=abu}
+\setbeamerfont{ppt kaki nama}{size=\tiny}
+\setbeamerfont{ppt kaki judul}{size=\tiny}
+\setbeamerfont{ppt kaki tanggal}{size=\tiny}
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.25\paperwidth, ht=2.25ex, dp=1ex, center]{ppt kaki nama}%
+      \usebeamerfont{ppt kaki nama}\insertshortauthor%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.45\paperwidth, ht=2.25ex, dp=1ex, center]{ppt kaki judul}%
+      \usebeamerfont{ppt kaki judul}\insertshorttitle%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.30\paperwidth, ht=2.25ex, dp=1ex, center]{ppt kaki tanggal}%
+      \usebeamerfont{ppt kaki tanggal}\insertshortdate%
+      \hspace*{4ex}\insertframenumber{} / \inserttotalframenumber%
+    \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+%--- ELEMEN LAIN ---------------------------------------------------------------
+\setbeamercolor{item projected}{bg=emas}              % bullet lingkaran bernomor
+\setbeamercolor{itemize item}{fg=emas}                % bullet itemize tingkat 1
+\setbeamercolor{itemize subitem}{fg=emas}             % bullet itemize tingkat 2
+\setbeamercolor{itemize subsubitem}{fg=emas}          % bullet itemize tingkat 3
+\setbeamercolor{button}{bg=emas}                      % tombol tautan \beamerbutton
+\setbeamercolor{section in toc}{fg=black}             % warna entri daftar isi
+\setbeamercolor{subsection in toc}{fg=black}
+
+%--- BLOK (block / alertblock / exampleblock) ----------------------------------
+% Dipakai untuk menyorot informasi penting; contoh pemakaian ada di
+% 03-contoh-konten.tex (slide "Blok, Kolom & Tabel").
+\setbeamercolor{block title}{bg=emas, fg=white}
+\setbeamercolor{block body}{bg=emas!20}
+\setbeamercolor{block title alerted}{bg=orange, fg=white}
+\setbeamercolor{block body alerted}{bg=orange!10}
+\setbeamercolor{block title example}{bg=biruTua, fg=white}
+\setbeamercolor{block body example}{bg=biruTua!10}
+
+%--- FONT ----------------------------------------------------------------------
+\usefonttheme{default}  % teks slide memakai sans-serif (jelas saat diproyeksikan)
+
+%===============================================================================
+% 6) TAMPILAN KEPALA SLIDE (headline) & NAVIGASI
+% -----------------------------------------------------------------------------
+% Tinggi bilah navigasi atas dirapatkan dan simbol navigasi bawaan disembunyikan
+% agar slide bersih. Logo pojok kanan-atas dapat diatur lewat \logo{...} di
+% konfigurasi.tex (otomatis muncul di semua slide kecuali sampul).
+%===============================================================================
+\setbeamertemplate{headline}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth, ht=4.5ex]{headline}%
+    \insertnavigation{\paperwidth}%
+    % \llap: logo ditempel di ujung kanan bilah navigasi tanpa menambah lebar
+    % (mencegah peringatan overfull). Isi \logo{...} diatur di konfigurasi.tex.
+    \llap{\raisebox{-0.4ex}{\insertlogo}\hspace*{1ex}}%
+  \end{beamercolorbox}%
+}
+\setbeamercolor{headline}{fg=white, bg=emas}
+\setbeamercolor{section in head/foot}{fg=white, bg=emas}
+\setbeamercolor{section in head/foot shaded}{fg=abu2, bg=emas}
+
+\setbeamertemplate{navigation symbols}{}   % hilangkan simbol navigasi pojok kanan
+
+%===============================================================================
+% 7) TAMPILAN KODE PROGRAM (listings)
+% -----------------------------------------------------------------------------
+% Cara pakai di konten slide — pilih salah satu:
+%   (a) cepat, tanpa judul:
+%       \begin{lstlisting}[language=Python]
+%       def halo(): print("halo")
+%       \end{lstlisting}
+%   (b) dengan bingkai berjudul (direkomendasikan):
+%       \begin{pptcode}{Contoh Python}
+%       ...
+%       \end{pptcode}
+% Daftar bahasa yang didukung: Python, C, C++, Java, MATLAB, R, HTML, SQL, dsb.
+% (lihat daftar lengkap di dokumen listings: \lstset language=... )
+%===============================================================================
+\definecolor{kataKunci}{RGB}{0, 92, 197}   % biru  — kata kunci bahasa
+\definecolor{komentarKode}{RGB}{34, 139, 34}  % hijau — komentar program
+\definecolor{teksString}{RGB}{170, 55, 20} % merah bata — string/teks
+\definecolor{nomorBaris}{RGB}{130, 130, 130}  % abu — nomor baris
+\definecolor{latarKode}{RGB}{248, 248, 248}   % abu sangat muda — latar blok kode
+
+\lstset{
+  basicstyle=\ttfamily\scriptsize,          % font mesin-ketik ukuran kecil
+  keywordstyle=\bfseries\color{kataKunci},  % kata kunci: tebal biru
+  commentstyle=\itshape\color{komentarKode},% komentar: miring hijau
+  stringstyle=\color{teksString},           % string: merah bata
+  numbers=left,                             % tampilkan nomor baris di kiri
+  numberstyle=\tiny\color{nomorBaris},
+  numbersep=8pt,
+  backgroundcolor=\color{latarKode},        % latar abu muda (pengganti frame=shadowbox
+  frame=single,                             %  yang tampak sobek/kotor saat dicetak)
+  rulecolor=\color{nomorBaris},             % garis bingkai abu — jangan merah!
+  breaklines=true,                          % baris panjang otomatis dipecah
+  breakatwhitespace=true,
+  tabsize=2,
+  showstringspaces=false,                   % jangan tampilkan spasi dalam string
+  xleftmargin=14pt, xrightmargin=6pt,       % margin dalam bingkai
+  aboveskip=6pt, belowskip=6pt,
+  columns=fullflexible,                     % perataan proporsional agar rapi
+  keepspaces=true,
+}
+
+% Lingkungan siap-pakai dengan judul: \begin{pptcode}{Judul} ... \end{pptcode}
+\lstnewenvironment{pptcode}[1]{%
+  \lstset{title={#1}}}{}
+
+%===============================================================================
+% 8) MAKRO BANTU SIAP PAKAI
+% -----------------------------------------------------------------------------
+% Kumpulan perintah kecil yang sering dipakai — supaya konten slide konsisten.
+% Contoh: \penekanan{penting!} atau \sel{\rho_{AB}}
+%===============================================================================
+
+% \penekanan{...} : sorot kata/frasa penting dengan warna merah TELU + tebal
+\newcommand{\penekanan}[1]{\textcolor{telu}{\textbf{#1}}}
+
+% \istilah{...}   : menandai istilah asing (italic), contoh: \istilah{entanglement}
+\newcommand{\istilah}[1]{\textit{#1}}
+
+% \sel{...}       : potongan matematika di dalam kalimat: \sel{S(\rho_A) = 1}
+\newcommand{\sel}[1]{$#1$}
+
+% Trasetil & subskrip umum — menjaga konsistensi penulisan di seluruh slide
+\DeclareMathOperator{\tr}{tr}                 % \tr\,\rho  ->  "tr ρ" (tegak)
+\newcommand{\ketsub}[2]{\ket{#1}_{#2}}        % \ketsub{\psi}{AB} -> |ψ⟩_AB
+\newcommand{\brasub}[2]{\bra{#1}_{#2}}        % \brasub{\psi}{AB} -> ⟨ψ|_AB
+\newcommand{\ketbra}[2]{\ket{#1}\!\bra{#2}}   % |0⟩⟨0| ringkas
+
+%===============================================================================
+% 9) PENGATURAN LAIN
+% -----------------------------------------------------------------------------
+% Menghilangkan peringatan \translate bawaan beamer (referensi:
+% https://github.com/josephwright/beamer/issues/449)
+\pdfstringdefDisableCommands{\def\translate#1{#1}}
+
+% Akhir berkas — jangan hapus \endinput (memastikan LaTeX berhenti membaca di sini)
+\endinput

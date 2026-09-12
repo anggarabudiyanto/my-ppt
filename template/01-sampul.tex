@@ -1,0 +1,37 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  01-SAMPUL.TEX — HALAMAN JUDUL (SLIDE 1)
+%  -----------------------------------------------------------------------------
+%  Slide ini otomatis menampilkan data dari konfigurasi.tex (\title, \author,
+%  \institute, \date) melalui perintah \titlepage — tidak perlu mengedit apa
+%  pun di sini, kecuali ingin mengubah latar atau susunan logo.
+%
+%  [plain] = slide tanpa bilah navigasi atas & tanpa footer (bersih untuk
+%  halaman judul). Logo pojok otomatis ikut tersembunyi di frame plain.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \section{} kosong: sampul tidak dihitung sebagai bab di navigasi/daftar isi
+\section{}
+
+%--- LATAR SAMPUL --------------------------------------------------------------
+% telkom-kampus.jpg dipakai sebagai latar dengan transparansi 20% agar teks
+% judul tetap terbaca. Ganti gambarnya di folder assets/ bila perlu.
+\usebackgroundtemplate{\transparent{0.2}\includegraphics[width=\paperwidth]{telkom-kampus.jpg}}
+
+\begin{frame}[plain]
+  \vspace{-0.5cm}
+  \titlepage  % <- otomatis: judul + penulis + institusi + tanggal (dari konfigurasi.tex)
+
+  %--- TIGA LOGO BERJAJAR DI ATAS SLIDE ----------------------------------------
+  % Posisi dinyatakan dalam koordinat cm dari tengah slide (0,0):
+  %   (3.5, 6.2) = logo kiri | (7.5, 6.2) = tengah | (11.5, 6.2) = kanan
+  % Ganti gambar/ukuran sesuai kebutuhan institusi Anda.
+  \begin{tikzpicture}[overlay, remember picture]
+    \node[inner sep=0pt] at (3.5, 6.2)  {\includegraphics[width=2.5cm]{logo-telkom-horizontal.png}};
+    \node[inner sep=0pt] at (7.5, 6.2)  {\includegraphics[width=3.5cm]{logo-aicoms.png}};
+    \node[inner sep=0pt] at (11.5, 6.2) {\includegraphics[width=2.5cm]{logo-telkom-horizontal.png}};
+  \end{tikzpicture}
+\end{frame}
+
+%--- KEMBALIKAN TAMPILAN NORMAL UNTUK SLIDE BERIKUTNYA -------------------------
+% Hapus latar gambar; logo pojok kanan atas & footer muncul kembali otomatis.
+\usebackgroundtemplate{}

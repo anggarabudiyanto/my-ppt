@@ -1,0 +1,188 @@
+%---------------------------------------------------------
+%	PRESENTATION BODY SLIDES
+%---------------------------------------------------------
+\section{INFORMATION TEORY} % Note all sections and subsections are automatically placed in your table of contents
+
+%------------------------------------------------
+\begin{frame}
+    \frametitle{Catatan 1}
+       \vspace*{-0.5cm}
+  \begin{columns}[T]
+  \small
+    \begin{column}{0.5\textwidth}
+        \begin{itemize}
+            \item Entropi \cite{djordjevic2019physical}\\
+                \begin{itemize}
+                \tiny \justifying                
+                    \item[$\Rightarrow$] Entropi adalah ukuran dari ketidakpastian atau kekacauan dalam suatu sistem atau distribusi probabilitas.
+                    \item[$\Rightarrow$]  Dalam teori informasi, entropi digunakan untuk mengukur seberapa banyak informasi yang terkandung dalam suatu variabel acak. 
+                    \item[$\Rightarrow$] Entropi memiliki keterkaitan dengan konsep ketidakpastian dalam sistem, di mana semakin tinggi entropi suatu sistem, semakin tinggi pula ketidakpastian atau kekacauan dalam sistem tersebut.
+                \end{itemize}
+            \item Conditional Entropy\\
+                \begin{itemize}
+                \tiny \justifying
+                    \item[$\Rightarrow$] \textit{Conditional entropy} adalah ukuran ketidakpastian yang tersisa pada input saluran setelah output saluran diterima.
+                    \item[$\Rightarrow$]  \textit{Conditional entropy} mengukur seberapa banyak informasi yang masih tidak diketahui pada input saluran setelah melihat output saluran.
+                    \item[$\Rightarrow$] \textit{Conditional entropy} dapat diukur melalui persamaan
+                        \begin{equation}
+                            H(Y|X) = -\sum_{x \in X} p(x) \sum_{y \in Y}  \, p(y|x) \log p(y|x),
+                        \end{equation}
+                     di mana $p(x,y)$ adalah \textit{joint distribution} dari input dan output saluran.
+                \end{itemize}
+        \end{itemize}
+    \end{column}
+
+   \begin{column}{0.5\textwidth}
+        \begin{itemize}
+            \item Relative Entropy \cite{wolfowitz2012coding}\\
+                \begin{itemize}
+                \tiny \justifying                
+                    \item[$\Rightarrow$] Relative Entropy, juga dikenal sebagai Kullback-Leibler (KL) distance, adalah ukuran jarak antara dua distribusi probabilitas.
+                    \item[$\Rightarrow$]   Relative Entropy mengukur ketidakefisiesi antara dua jarak distribusi probabilitas dengan mengasumsikan distribusi q(x) ketika distribusi sebenarnya adalah p(x). 
+                    \item[$\Rightarrow$] Relative Entropy dapat diukur melalui persamaan 
+                        \begin{equation}
+                            D(p||q) = \sum p(x) \log\left(\frac{p(x)}{q(x)}\right).
+                        \end{equation}
+                \end{itemize}
+            \item Mutual Information \cite{djordjevic2019physical}\\
+                \begin{itemize}
+                \tiny \justifying
+                    \item[$\Rightarrow$] Mutual Information adalah ukuran seberapa banyak informasi yang dikandung oleh satu variabel acak terkait dengan variabel acak lainnya..
+                    \item[$\Rightarrow$]  Mutual Information mengukur seberapa banyak informasi yang diketahui pada input saluran setelah melihat output saluran.
+                    \item[$\Rightarrow$]Mutual Information dapat diukur melalui persamaan
+                        \begin{equation}
+                           I(X;Y) = H(X) - H(X|Y),
+                        \end{equation}
+                     di mana $H(X)$ adalah entropy dari output saluran dan $H(X|Y)$ adalah conditional entropy.
+                \end{itemize}
+        \end{itemize}
+    \end{column}
+  \end{columns}   
+\end{frame}
+
+\begin{frame}
+    \frametitle{Catatan 2}
+       \vspace*{-0.5cm}
+  \begin{columns}[T]
+  \small
+    \begin{column}{0.5\textwidth}
+        \begin{itemize}
+            \item Channel Capacity\cite{djordjevic2019physical}\\
+                \begin{itemize}
+                \tiny \justifying                
+                    \item[$\Rightarrow$] Channel Capacity adalah batasan penting pada tingkat data yang dapat dicapai oleh skema modulasi dan pengkodean apa pun. 
+                    \item[$\Rightarrow$]  Ini juga dapat digunakan untuk membandingkan skema modulasi dan pengkodean yang berbeda dalam hal jarak mereka dari kurva kapasitas saluran maksimum. 
+                    \item[$\Rightarrow$] Persamaan channel capacity yaitu 
+                        \begin{equation}
+                            C = \log_2 M + (1 - P_s) \log_2(1 - P_s) + P_s \log_2\left(\frac{P_s}{M - 1}\right).
+                        \end{equation}
+                    \item[$\Rightarrow$] Kapasitas saluran, \( C \), mengukur jumlah maksimum informasi yang dapat dikirimkan melalui suatu saluran (misalnya, kabel) yang didefinisikan sebagai berikut
+                    \begin{equation}
+                        C = \max_{P(X)} I(X, Y),
+                    \end{equation}
+                    di mana \( X \) adalah masukan ke saluran dan \( Y \) adalah keluaran.
+
+                \end{itemize}
+        \end{itemize}
+    \end{column}
+
+    \begin{column}{0.5\textwidth}
+         \begin{itemize}
+            \item Information Capacity Theorem\\
+                \begin{itemize}
+                \tiny \justifying
+                    \item[$\Rightarrow$] Teorema Kapasitas Informasi menyatakan kondisi di mana suatu sumber diskrit tanpa memori dengan entropi $H(S)$ dan kapasitas $C$ dapat mentransmisikan informasi melalui saluran dengan probabilitas kesalahan yang sangat kecil.
+                    \item[$\Rightarrow$] Informasi  pada sistem klasik ataupun kuantum  diukur dari jumlah minimal komunikasi pada saat penyampaiannya \cite{cerf1996quantum}.
+                    \item[$\Rightarrow$] Menurut Slepian \& Wolf: jumlah informasi yang diperlukan untuk memperoleh pengetahuan penuh diberikan oleh sejumlah yang disebut \textbf{Conditional Entropy}.
+                    \item[$\Rightarrow$] Menurut Shannon: jumlah informasi dari suatu sumber adalah memori yang diperlukan untuk merepresentasikan keluarannya dan diberikan oleh \textbf{entropi} sumber tersebut \cite{cerf1996quantum}.
+                    \item[$\Rightarrow$] Kriteria utama teorema adalah bahwa rasio entropi sumber terhadap waktu simbol ($\frac{H(S)}{T}$) harus kurang dari atau sama dengan rasio kapasitas saluran terhadap waktu saluran ($\frac{C}{T_c}$).
+                    \item[$\Rightarrow$] Jika $\frac{H(S)}{T} \leq \frac{C}{T_c}$, maka skema pengkodean dapat dibangun untuk mentransmisikan keluaran sumber melalui saluran dengan tingkat kesalahan yang sangat kecil.
+                    \item[$\Rightarrow$] Kondisi rasio yang ditetapkan oleh teorema mengindikasikan bahwa penggunaan waktu dan kapasitas saluran harus seimbang. Jika kriteria terpenuhi, skema pengkodean efisien dapat dikembangkan untuk mentransmisikan informasi melalui saluran dengan probabilitas kesalahan yang sangat rendah.
+                \end{itemize}
+            \end{itemize}    
+    \end{column}
+   \end{columns}   
+\end{frame}
+
+\begin{frame}
+    \frametitle{Catatan 3}
+       \vspace*{-0.5cm}
+  \begin{columns}[T]
+  \small
+    \begin{column}{0.5\textwidth}
+        \begin{itemize} \justifying \tiny
+            \item Joint Entropy\\
+                Joint Entropy merupakan total ketidakpastian tentang pasangan (X, Y), yang dapat dituliskan sebagai: 
+                    \begin{equation}
+                        H(X, Y) \equiv -\sum_{x, y} p(x, y) \log p(x, y).
+                    \end{equation}
+            \item Conditional Entropy\\
+                Entropy Kondisional (Conditional Entropy) merupakan ketidakpastian pada rata-rata X diberikan Y dan nilainya selalu non-negatif dapat dituliskan sebagai:
+                    \begin{equation}
+                         H(X|Y) \equiv H(X, Y) - H(Y).
+                    \end{equation}
+            \item Mutual Entropy\\
+                Mutual Entropy merupakan informasi yang terkandung pada X dan Y yang dapat dituliskan sebagai:
+                    \begin{equation}
+                         H(X:Y) \equiv H(X) + H(Y) - H(X, Y).
+                    \end{equation}
+                
+        \end{itemize}
+    \end{column}
+
+    \begin{column}{0.5\textwidth}
+         \begin{itemize} \tiny \justifying
+            \item -\\
+                \begin{itemize}
+                \tiny \justifying
+                    \item[$\Rightarrow$] 
+                \end{itemize}
+            \end{itemize}    
+    \end{column}
+   \end{columns}   
+\end{frame}
+
+% \begin{frame}
+%     \frametitle{Slepian–Wolf Bound}
+%        \vspace{-0.5cm}
+%   \begin{columns}
+%   \small
+%     \begin{column}{0.5\textwidth}
+%         \begin{itemize} 
+%              \begin{figure}
+%              \centering
+%              \includegraphics[width=0.8\textwidth]{gambar/BASIC/SlepianWolfEncoderDecoder.png}
+%              \captionsetup{font=tiny, justification=justified,width=1\textwidth}
+%              \captionof{figure}{Dua sumber distribusi random X dan Y yang melalui encoder decoder.}
+%              \label{fig:encoderdecoderslepianwolf}
+%             \end{figure}
+%     \justifying \tiny \vspace{-0.5cm}
+%             \item Slepian–Wolf bound adalah batasan entropi yang menentukan jumlah bit minimum yang dibutuhkan untuk mengkodekan dua sumber data yang berkorelasi secara lossless yang ditemukan oleh David Slepian dan Jack Wolf pada tahun 1973.
+%             \item Batasan ini menyatakan bahwa untuk mengkodekan dua sumber data yang berkorelasi secara lossless, laju bit total harus setidaknya sama dengan jumlah entropi sumber individu dikurangi informasi bersama.
+%             \item Jika dua sumber data berkorelasi secara kuat, maka informasi yang diperlukan untuk mengkodekan satu sumber data dapat dikurangi dengan menggunakan informasi dari sumber data lainnya. 
+    
+%         \end{itemize}
+%     \end{column}
+
+%     \begin{column}{0.5\textwidth}
+
+%        \tiny \justifying
+%              \begin{figure}
+%              \centering
+%              \includegraphics[width=0.5\textwidth]{gambar/BASIC/SlepianWolfPlot.png}
+%              \captionsetup{font=tiny, justification=justified,width=1\textwidth}
+%              \captionof{figure}{Batas tingkat lossless coding pada dua sumber X dan Y.}
+%              \label{fig:encoderdecoderslepianwolf}
+%             \end{figure} \vspace{-0.8cm}
+%                 \begin{align*}
+%                     R_X &\geq H(X|Y) \\
+%                     R_Y &\geq H(Y|X) \\
+%                     R_X + R_Y &\geq H(X,Y)
+%                 \end{align*}
+%         Sumber catatan \firstcite{slepian1973noiseless}
+  
+%     \end{column}
+%    \end{columns}   
+% \end{frame}
+
+ \input{NEGATIVE_ENTROPY_IN_QUANTUM_INFORMATION_THEORY}

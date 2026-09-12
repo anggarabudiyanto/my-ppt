@@ -1,0 +1,100 @@
+%---------------------------------------------------------
+%	PRESENTATION BODY SLIDES
+%---------------------------------------------------------
+\section{CHANNEL} % Note all sections and subsections are automatically placed in your table of contents
+
+%------------------------------------------------
+\begin{frame}
+    \frametitle{Kanal Kuantum 1}
+  \begin{columns} %Frame Kiri
+    \begin{column}{0.5\textwidth}\vspace{-0.5cm}
+      \justifying % Perataan kanan kiri
+      \small % Ukuran teks menjadi kecil
+        \begin{itemize}
+            \item The Pauli Channel\\
+                \fontsize{4}{6}\selectfont \justifying
+                Saluran Pauli memiliki keadaan masukan $\rho$ yang dirumuskan sebagai:
+                    \begin{equation}
+                        \rho \rightarrow CP(\rho) = (1 - p)\rho + p_x X\rho X + p_y Y\rho Y + p_x Z\rho Z,
+                    \end{equation}
+                dimana X, Y dan Z adalah qubt tunggal yang ditentukan oleh Pauli  
+                    \begin{equation}
+                        X = \begin{bmatrix}
+                        0 & 1 \\
+                        1 & 0 \\
+                        \end{bmatrix},
+                    \end{equation}
+                    \begin{equation}
+                        Y = \begin{bmatrix}
+                        0 & -i \\
+                        i & 0 \\
+                        \end{bmatrix},
+                    \end{equation}            
+                    \begin{equation}
+                        Z = \begin{bmatrix}
+                        1 & 0 \\
+                        0 & -1 \\
+                        \end{bmatrix}.
+                    \end{equation}
+                Probabilitas depolarisasi p adalah jumlah probabilitas depolarisasi error Pauli X, Y, dan Z, dapat di tuliskan sebagai:
+                    \begin{equation}
+                        p=p_X+p_Y+p_Z
+                    \end{equation}
+                dengan waktu sesaat t bergantung pada waktu relaksasi $T_1$ dan dephasing waktu $T_2$ sebagai
+                    \begin{equation}
+                        \begin{aligned}
+                            p_x &= p_y = \frac{1}{4} (1 - e^{-\frac{t}{T_2}}) \\
+                            p_z &= \frac{1}{4} (1 + e^{-\frac{t}{T_1}} - 2e^{-\frac{t}{T_2}})
+                        \end{aligned}
+                    \end{equation}
+        \end{itemize}
+    \end{column}
+    
+    \begin{column}{0.5\textwidth}\vspace{-1.8cm} % Frame Kanan
+            \justifying % Perataan kanan kiri
+      \small % Ukuran teks menjadi kecil
+        \begin{itemize}
+            \item The Depolarizing Channel\\
+                {\fontsize{4}{6}\selectfont \justifying
+                Kanal depolarisasi menyatakan bahwa matriks kekekalan input $\rho_i$ dapat mengalami depolarisasi, di mana sebagian dari informasi bisa hilang secara acak. Jika $p=0$, kanal tersebut tidak mengalami depolarisasi, sedangkan jika $p=1$, kanal tersebut menghasilkan keadaan acak penuh (fully random state). Kanal depolarisasi secara umum dapat dituliskan sebagai:
+                    \begin{equation}
+                        \mathcal{N}(\rho_i) = p \frac{I}{2} + (1 - p) \rho_i.
+                    \end{equation}
+                Sedangkan apabila menggunakan 2 user ortogonal maka mixed input statenya adalah
+                    \begin{equation}
+                        \rho=\left(\sum_{i}p_i\rho_i\right)=p_0\rho_0+(1-p_0)\rho_1.
+                    \end{equation}
+                Setelah dilakukan tranformasi $\mathcal{N}$ maka didapatkan persamaan:
+                    \begin{equation}
+                    \begin{aligned}
+                        \mathcal{N}\left(\sum_{i}p_i\rho_i\right) &= \mathcal{N}(p_0\rho_0+(1-p_0)\rho_1) \\
+                        &= p\frac{1}{2}I+(1-p)(p_0\rho_0+(1-p_0)\rho_1)
+                    \end{aligned}
+                    \end{equation}
+                }
+        \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Kanal Kuantum 2}
+  \begin{columns} %Frame Kiri
+    \begin{column}{0.5\textwidth}\vspace{-0.5cm}
+      \justifying % Perataan kanan kiri
+      \small % Ukuran teks menjadi kecil
+        \begin{itemize}
+            \item T
+                
+        \end{itemize}
+    \end{column}
+    
+    \begin{column}{0.5\textwidth}\vspace{-0.5cm} % Frame Kanan
+            \justifying % Perataan kanan kiri
+      \small % Ukuran teks menjadi kecil
+        \begin{itemize}
+            \item n
+        \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}

@@ -1,0 +1,22 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  04-REFERENSI.TEX — SLIDE DAFTAR PUSTAKA (OTOMATIS)
+%  -----------------------------------------------------------------------------
+%  Slide ini mengisi dirinya sendiri dari berkas bib.bib: semua entri yang
+%  PERNAH dikutip (\cite/\footcite/\firstcite) muncul otomatis di sini.
+%  Anda tidak perlu mengedit berkas ini.
+%
+%  OPSI
+%    \printbibliography                       : hanya entri yang dikutip
+%    \nocite{*} \printbibliography            : tampilkan SEMUA entri bib.bib
+%    [allowframebreaks]                       : otomatis pecah bila > 1 slide
+%    [noframenumbering]                       : tidak menaikkan nomor slide
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[allowframebreaks, noframenumbering]
+  \frametitle{REFERENSI}
+  \justifying
+  % \bibfont tiny + jarak antarentri 0pt agar banyak referensi muat ringkas
+  {\renewcommand{\bibfont}{\tiny}%
+   \setlength{\bibitemsep}{0pt}%
+   \printbibliography}
+\end{frame}

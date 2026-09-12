@@ -1,10 +1,10 @@
 # ==============================================================================
 #  BUILD-PDF.YML — Kompilasi otomatis presentasi menjadi PDF via GitHub Actions
-#  -----------------------------------------------------------------------------
-#  Setiap kali kode di-push (folder template/ berubah), GitHub:
-#    1. memasang TeX Live + biber,
-#    2. mengompilasi template/main.tex  (pdflatex -> biber -> pdflatex x2),
-#    3. menyimpan hasil main.pdf sebagai ARTIFACT "Template-Presentasi-PDF"
+#  ------------------------------------------------------------------------------
+#  Setiap kali berkas template di-push, GitHub:
+#    1. memasang TeX Live,
+#    2. mengompilasi main.tex di AKAR repo (pdflatex -> bibtex -> pdflatex x2),
+#    3. menyimpan hasil main.pdf sebagai ARTIFACT "Presentasi-PDF"
 #       (unduh dari tab Actions pada run terbaru),
 #    4. pada branch main: memperbarui RELEASE "PDF Terbaru" berisi PDF siap
 #       unduh (tab Releases pada halaman repositori).
@@ -14,17 +14,22 @@ name: Build PDF
 
 on:
   push:
-    branches: ["**"]          # jalankan di semua branch (termasuk branch kerja)
+    branches: ["**"]                    # jalankan di semua branch (termasuk kerja)
     paths:
-      - "template/**"
+      - "*.tex"
+      - "*.sty"
+      - "bib.bib"
+      - "gambar/**"
       - ".github/workflows/build-pdf.yml"
   pull_request:
     paths:
-      - "template/**"
-  workflow_dispatch:          # izinkan "Run workflow" manual dari tab Actions
+      - "*.tex"
+      - "*.sty"
+      - "bib.bib"
+  workflow_dispatch:                    # izinkan "Run workflow" manual dari tab Actions
 
 permissions:
-  contents: write             # dibutuhkan untuk membuat/memperbarui Release
+  contents: write                       # dibutuhkan untuk membuat/memperbarui Release
 
 jobs:
   compile:
@@ -34,7 +39,7 @@ jobs:
       - name: Ambil kode repositori
         uses: actions/checkout@v4
 
-      - name: Pasang TeX Live (pdflatex, biblatex) dan biber
+      - name: Pasang TeX Live (pdflatex, biblatex, bibtex)
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
@@ -43,22 +48,20 @@ jobs:
             texlive-latex-extra \
             texlive-plain-generic \
             texlive-fonts-recommended \
-            texlive-bibtex-extra \
-            biber
+            texlive-bibtex-extra
 
-      - name: Kompilasi (pdflatex -> biber -> pdflatex x2)
-        working-directory: template
+      - name: Kompilasi (pdflatex -> bibtex -> pdflatex x2)
+        # Bila pdflatex/bibtex gagal, baris error diekstrak dari berkas .log
+        # dan dilaporkan sebagai anotasi GitHub agar mudah dibaca.
         run: |
-          # Bila pdflatex/biber gagal, baris error diekstrak dari berkas .log
-          # dan dilaporkan sebagai anotasi GitHub agar mudah dibaca.
           if ! pdflatex -interaction=nonstopmode -halt-on-error -file-line-error main.tex; then
             echo "::error::pdflatex putaran 1 gagal"
             grep -m 8 -E "^! |Fatal error|[a-z]+\.(tex|sty|cls):[0-9]+:" main.log | head -8 | while IFS= read -r l; do echo "::error::${l:0:250}"; done
             exit 1
           fi
-          if ! biber main; then
-            echo "::error::biber gagal"
-            grep -m 5 -iE "ERROR" main.blg | head -5 | while IFS= read -r l; do echo "::error::${l:0:250}"; done
+          if ! bibtex main; then
+            echo "::error::bibtex gagal"
+            grep -m 5 -iE "error" main.blg | head -5 | while IFS= read -r l; do echo "::error::${l:0:250}"; done
             exit 1
           fi
           pdflatex -interaction=nonstopmode -halt-on-error -file-line-error main.tex
@@ -67,8 +70,8 @@ jobs:
       - name: Simpan PDF sebagai artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Template-Presentasi-PDF-${{ github.run_number }}
-          path: template/main.pdf
+          name: Presentasi-PDF-${{ github.run_number }}
+          path: main.pdf
           if-no-files-found: error
 
       - name: Perbarui Release "PDF Terbaru" (hanya di branch main)
@@ -78,7 +81,7 @@ jobs:
           tag_name: pdf-terbaru
           name: "PDF Terbaru"
           body: |
-            PDF ter kompilasi otomatis dari commit ${{ github.sha }}.
-            Berkas: **Template-Presentasi-Telkom-University.pdf**
-          files: template/main.pdf
+            PDF terkompilasi otomatis dari commit ${{ github.sha }}.
+            Berkas: **main.pdf**
+          files: main.pdf
           make_latest: true

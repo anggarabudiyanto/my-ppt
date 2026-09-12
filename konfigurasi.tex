@@ -1,0 +1,64 @@
+%=====================================================================
+%  KONFIGURASI.TEX — DATA PRESENTASI (WAJIB DIEDIT)
+%=====================================================================
+%  Semua data di file ini otomatis dipakai pada:
+%    * slide sampul (01-sampul.tex)
+%    * footer setiap slide (nama pendek, judul pendek, tanggal)
+%  Isi [opsi kurung siku] = versi SINGKAT untuk footer, wajib diisi
+%  agar footer tidak meluber keluar layar.
+%=====================================================================
+
+%---------------------------------------------------------------------
+%  1. JUDUL PRESENTASI
+%---------------------------------------------------------------------
+%  \title[Judul pendek]{Judul lengkap\\(pakai \\ untuk pindah baris)}
+\title[Analisis Multiple Access Channel Berbasis Entanglement Kuantum]{%
+    \textbf{Analysis on Multiple Access Channel\\Based on Quantum Entanglement}}
+% Klik kotak tengah footer untuk beralih antara nomor slide pertama dan terakhir.
+%\subtitle{Subjudul (opsional)}
+
+%---------------------------------------------------------------------
+%  2. PENULIS & DOSEN PEMBIMBING
+%---------------------------------------------------------------------
+%  \author[Nama pendek]{Nama lengkap (NIM) \\ Pembimbing ... }
+\author[Anggara Budiyanto]{%
+    \textbf{Anggara Budiyanto (1101201498)} \\          % <-- ganti nama & NIM Anda
+    {\footnotesize \vspace{-0cm} Supervisor: Dr. Eng. Khoirul Anwar, S.T., M.Eng.}\\
+    {\footnotesize Co-Supervisor: Dr. Linda Meylani, S.T., M.T.}
+    \vspace{-0.4cm}%
+}
+
+%---------------------------------------------------------------------
+%  3. INSTITUSI / AFILIASI
+%---------------------------------------------------------------------
+\institute[]{%
+    \begin{minipage}{1\linewidth}
+        \begin{center}
+            The University Center of Excellence for Advanced Intelligent Communications (AICOMS) \\
+            \smallskip School of Electrical Engineering, Telkom University, Bandung, INDONESIA \\
+            \smallskip \textit{E-mail: {anggarabudiyanto@student.telkomuniversity.ac.id}}
+        \end{center}\vspace{-0.5cm}
+    \end{minipage}%
+}
+
+%---------------------------------------------------------------------
+%  4. TANGGAL & TEMPAT PRESENTASI
+%---------------------------------------------------------------------
+%  \today mencetak tanggal kompilasi otomatis; hapus jika ingin tanggal tetap.
+\date[Seminar---\today]{%
+    \vspace{-0.5cm}%
+    \begin{minipage}{0.5\linewidth}
+        \begin{center}
+            Presented at: (nama forum/konferensi) \\
+            Hybrid, \today
+        \end{center}
+    \end{minipage}%
+}
+
+%---------------------------------------------------------------------
+%  5. LOGO KEPOLOKAN (muncul di pojok kanan-atas setiap slide isi)
+%---------------------------------------------------------------------
+%  Ganti berkas gambar di folder gambar/logo/ sesuai logo institusi Anda.
+%  Sembunyikan logo pada slide tertentu dengan perintah \logo{} di dalam
+%  file slide tersebut (contoh lihat 01-sampul.tex).
+\logo{\includegraphics[width=2.5cm]{gambar/logo/TELU Vertikal.png}}

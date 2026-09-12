@@ -1,0 +1,92 @@
+%=====================================================================
+%  08-KANAL.TEX — KANAL KUANTUM
+%=====================================================================
+%  PERBAIKAN dari versi lama:
+%    * "p_x Z\rho Z" -> "p_z Z\rho Z" (salah indeks pada kanal Pauli);
+%    * "qubt" -> "qubit".
+%=====================================================================
+\section{CHANNEL}
+
+\begin{frame}
+    \frametitle{Kanal Kuantum 1}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}\vspace{-0.5cm}
+            \small\justifying
+            \begin{itemize}
+                \item The Pauli Channel \\
+                    {\fontsize{4}{6}\selectfont\justifying
+                    Kanal Pauli mentransformasikan keadaan masukan $\rho$
+                    sebagai:
+                    \begin{equation}
+                        \rho \rightarrow \mathcal{C}_P(\rho)
+                        = (1-p)\rho + p_x X\rho X + p_y Y\rho Y + p_z Z\rho Z,
+                    \end{equation}
+                    dengan $X$, $Y$, $Z$ matriks Pauli satu-qubit
+                    \begin{equation}
+                        X=\begin{bmatrix}0&1\\1&0\end{bmatrix},\quad
+                        Y=\begin{bmatrix}0&-i\\ i&0\end{bmatrix},\quad
+                        Z=\begin{bmatrix}1&0\\0&-1\end{bmatrix}.
+                    \end{equation}
+                    Probabilitas depolarisasi total $p$ adalah jumlah
+                    probabilitas galat Pauli:
+                    \begin{equation}
+                        p=p_X+p_Y+p_Z.
+                    \end{equation}
+                    Pada waktu sesaat $t$, peluang galat bergantung pada waktu
+                    relaksasi $T_1$ dan waktu \textit{dephasing} $T_2$:
+                    \begin{equation}
+                        \begin{aligned}
+                            p_x &= p_y = \frac{1}{4}\left(1-e^{-t/T_2}\right)\\
+                            p_z &= \frac{1}{4}\left(1+e^{-t/T_1}-2e^{-t/T_2}\right)
+                        \end{aligned}
+                    \end{equation}}
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.5\textwidth}\vspace{-0.5cm}
+            \small\justifying
+            \begin{itemize}
+                \item The Depolarizing Channel \\
+                    {\fontsize{4}{6}\selectfont\justifying
+                    Kanal depolarisasi menyatakan matriks masukan $\rho_i$
+                    dapat mengalami depolarisasi: sebagian informasi hilang
+                    secara acak. Jika $p=0$ kanal tidak mendepolarisasi;
+                    jika $p=1$ kanal menghasilkan keadaan acak penuh
+                    (\textit{fully random state}):
+                    \begin{equation}
+                        \mathcal{N}(\rho_i)=p\,\frac{I}{2}+(1-p)\rho_i.
+                    \end{equation}
+                    Untuk dua pengguna ortogonal, \textit{mixed input state}
+                    \begin{equation}
+                        \rho=\sum_i p_i\rho_i=p_0\rho_0+(1-p_0)\rho_1.
+                    \end{equation}
+                    Setelah transformasi $\mathcal{N}$:
+                    \begin{equation}
+                        \begin{aligned}
+                            \mathcal{N}\!\left(\sum_i p_i\rho_i\right)
+                                &= \mathcal{N}\!\left(p_0\rho_0+(1-p_0)\rho_1\right)\\
+                                &= p\,\frac{1}{2}I+(1-p)\left(p_0\rho_0+(1-p_0)\rho_1\right).
+                        \end{aligned}
+                    \end{equation}}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%---------------------------------------------------------------------
+%  Template slide lanjutan (Kanal Kuantum 2) — ganti konten di bawah
+%  ini atau duplikat frame di atas untuk menambah slide baru.
+%---------------------------------------------------------------------
+%\begin{frame}
+%    \frametitle{Kanal Kuantum 2}
+%    \begin{columns}[T]
+%        \begin{column}{0.5\textwidth}
+%            \begin{itemize}\small
+%                \item Topik berikutnya...
+%            \end{itemize}
+%        \end{column}
+%        \begin{column}{0.5\textwidth}
+%            Kolom kanan...
+%        \end{column}
+%    \end{columns}
+%\end{frame}

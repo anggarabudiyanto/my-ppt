@@ -1,0 +1,15 @@
+%=====================================================================
+%  09-REFERENSI.TEX — DAFTAR PUSTAKA (OTOMATIS)
+%=====================================================================
+%  Entri pustaka diambil dari bib.bib melalui biblatex.
+%  Opsi [allowframebreaks] memecah slide otomatis bila daftar panjang;
+%  [noframenumbering] agar slide referensi tidak mengubah nomor slide.
+%=====================================================================
+%\section{REFERENSI}   % aktifkan bila ingin muncul di navigasi/outline
+\begin{frame}[noframenumbering, allowframebreaks]
+    \frametitle{REFERENSI}
+    \justifying
+    {\renewcommand{\bibfont}{\tiny}      % ukuran font daftar pustaka
+     \setlength{\bibitemsep}{0pt}        % jarak antar entri
+     \printbibliography}
+\end{frame}

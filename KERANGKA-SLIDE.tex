@@ -1,0 +1,139 @@
+%=====================================================================
+%  KERANGKA-SLIDE.TEX — PERPUSTAKAAN KERANGKA SLIDE SIAP PAKAI
+%=====================================================================
+%  CARA PAKAI:
+%   1. Cari kerangka yang diinginkan di bawah (semuanya BERKOMENTAR).
+%   2. Salin bloknya ke file konten Anda (03-... s.d. 08-...), atau
+%      buat file baru lalu daftarkan di main.tex dengan \input{...}.
+%   3. Hilangkan tanda % dan ganti teks tempat (---) dengan konten.
+%  File ini TIDAK menghasilkan slide apa pun (isi 100% komentar).
+%=====================================================================
+
+%#####################################################################
+%  A. SLIDE STANDAR (satu kolom)
+%#####################################################################
+%\begin{frame}
+%    \frametitle{--- Judul Slide ---}
+%    \justifying                      % rata kiri-kanan (opsional)
+%    \small                           % ukuran font: \tiny \scriptsize \small
+%    --- Tulis isi slide di sini. ---
+%    % Footnote kutipan: \firstcite{kunci} (pertama) / \secondcite{kunci}
+%    % Footnote biasa : teks\footnote{catatan kaki}
+%\end{frame}
+
+%#####################################################################
+%  B. SLIDE DUA KOLOM (paling sering dipakai)
+%#####################################################################
+%\begin{frame}
+%    \frametitle{--- Judul Slide ---}
+%    \vspace*{-0.5cm}                 % hemat ruang vertikal (opsional)
+%    \begin{columns}[T]               % [T] = rata atas
+%        \begin{column}{0.5\textwidth}
+%            \small
+%            \begin{itemize}\tiny\justifying
+%                \item Poin pertama
+%                \item Poin kedua
+%            \end{itemize}
+%        \end{column}
+%        \begin{column}{0.5\textwidth}
+%            \small
+%            --- isi kolom kanan ---
+%        \end{column}
+%    \end{columns}
+%\end{frame}
+
+%#####################################################################
+%  C. SLIDE DENGAN GAMBAR + CAPTION + RUJUKAN SILANG
+%#####################################################################
+%\begin{frame}
+%    \frametitle{--- Judul Slide ---}
+%    \begin{figure}
+%        \centering
+%        \includegraphics[width=0.8\textwidth]{gambar/---folder/---berkas.png}
+%        \captionsetup{font=tiny, justification=justified}
+%        \captionof{figure}{--- keterangan gambar ---}
+%        \label{fig:---label-unik---}          % rujuk: Gambar~\ref{fig:---}
+%    \end{figure}
+%\end{frame}
+
+%#####################################################################
+%  D. SLIDE DENGAN TABEL (booktabs)
+%#####################################################################
+%\begin{frame}
+%    \frametitle{--- Judul Slide ---}
+%    \begin{table}
+%        \centering
+%        {\small
+%        \begin{tabular}{lcc}         % l=teks, c=tengah, r=kanan
+%            \toprule
+%            \textbf{Kolom 1} & \textbf{Kolom 2} & \textbf{Kolom 3} \\
+%            \midrule
+%            Baris A & isi & isi \\
+%            Baris B & isi & isi \\
+%            \bottomrule
+%        \end{tabular}}
+%        \captionof{table}{--- keterangan tabel ---}
+%        \label{tab:---label-unik---}          % rujuk: Tabel~\ref{tab:---}
+%    \end{table}
+%\end{frame}
+
+%#####################################################################
+%  E. SLIDE PERSAMAAN MATEMATIKA / KUANTUM
+%#####################################################################
+%\begin{frame}
+%    \frametitle{--- Judul Slide ---}
+%    Satu persamaan berlabel (rujuk: Persamaan~\ref{eq:---}):
+%    \begin{equation}
+%        S(\rho) = -\Tr(\rho\log\rho)
+%        \label{eq:---label-unik---}
+%    \end{equation}
+%    Beberapa baris tanpa nomor:
+%    \begin{align*}
+%        \ket{\psi} &= \alpha\ket{0}+\beta\ket{1}\\
+%        \rho       &= \ketbra{\psi}{\psi}
+%    \end{align*}
+%\end{frame}
+
+%#####################################################################
+%  F. SLIDE KODE PROGRAM  (WAJIB [fragile]!)
+%#####################################################################
+%\begin{frame}[fragile]
+%    \frametitle{--- Judul Slide ---}
+%    \begin{lstlisting}[language=Python]     % ganti sesuai bahasa
+%    --- kode di sini, indentasi jangan pakai tab ---
+%    \end{lstlisting}
+%\end{frame}
+
+%#####################################################################
+%  G. SLIDE DENGAN BLOK BERTITIK-TITIK (3 jenis)
+%#####################################################################
+%\begin{frame}
+%    \frametitle{--- Judul Slide ---}
+%    \begin{block}{Blok biasa}        % emas
+%        --- definisi / catatan ---
+%    \end{block}
+%    \begin{alertblock}{Blok peringatan}  % oranye
+%        --- hal PENTING / kesimpulan ---
+%    \end{alertblock}
+%    \begin{exampleblock}{Blok contoh}    % biru
+%        --- contoh / studi kasus ---
+%    \end{exampleblock}
+%\end{frame}
+
+%#####################################################################
+%  H. SLIDE TANPA NOMOR (lampiran/cadangan)
+%#####################################################################
+%\begin{frame}[noframenumbering]
+%    \frametitle{--- Slide Cadangan ---}
+%    --- isi ---
+%\end{frame}
+
+%#####################################################################
+%  I. SUB-BAGIAN (muncul sebagai titik kedua di navigasi atas)
+%#####################################################################
+%\section{--- BAGIAN BESAR ---}
+%\subsection{--- Sub bagian ---}
+%\begin{frame}
+%    \frametitle{--- Judul Slide ---}
+%    --- isi ---
+%\end{frame}

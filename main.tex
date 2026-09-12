@@ -1,0 +1,60 @@
+%=====================================================================
+%  MAIN.TEX — FILE UTAMA PRESENTASI (TEMPLATE BEAMER TELKOM UNIVERSITY)
+%=====================================================================
+%  CARA PAKAI CEPAT
+%  ------------------------------------------------------------------
+%  1. Edit data presentasi Anda  ->  konfigurasi.tex
+%  2. Edit isi slide             ->  file 01-sampul.tex s.d. 10-penutup.tex
+%  3. Contoh semua fitur         ->  00-contoh-fitur.tex (bisa dinonaktifkan)
+%  4. Kompilasi (4 langkah):
+%       pdflatex main.tex
+%       bibtex   main
+%       pdflatex main.tex
+%       pdflatex main.tex
+%     atau jalankan  ./compile.sh
+%  5. Hasil akhir: main.pdf
+%
+%  CATATAN PENTING
+%  ------------------------------------------------------------------
+%  * Slide diaktifkan/nonaktifkan dengan memberi/kurung tanda % pada
+%    baris \input{...} di bawah. Urutan baris = urutan slide.
+%  * Setiap file konten diawali \section{...} yang otomatis muncul
+%    pada navigasi atas (headline) dan slide OUTLINE.
+%  * Ukuran kertas 16:9 (aspectratio=169) — cocok untuk proyektor
+%    dan layar modern.
+%=====================================================================
+\documentclass[
+    11pt,           % Ukuran font dasar (opsi: 8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt)
+    aspectratio=169 % Rasio 16:9 (hapus baris ini jika ingin rasio 4:3 klasik)
+]{beamer}
+
+\usepackage{ppt}         % Tema, warna, font, kutipan, dan pengaturan global (lihat ppt.sty)
+\input{konfigurasi}      % Judul, penulis, institusi, tanggal, logo (data presentasi)
+
+%---------------------------------------------------------------------
+%  DOKUMEN DIMULAI
+%---------------------------------------------------------------------
+\begin{document}
+
+%--- BAGIAN PEMBUKA --------------------------------------------------
+\input{01-sampul}            % Slide judul dengan latar belakang kampus
+\input{02-outline}           % Daftar isi otomatis (mengambil semua \section)
+
+%--- CONTOH & PANDUAN PENGGUNAAN TEMPLATE (matikan saat presentasi) --
+\input{00-contoh-fitur}      % Tutorial: teks, kolom, gambar, tabel, notasi,
+                             %           kode, kutipan, blok peringatan, dll.
+
+%--- ISI PRESENTASI (urutkan sesuai kebutuhan) -----------------------
+\input{03-latar-belakang}    % \section{LATAR BELAKANG}
+\input{04-pendahuluan}       % \section{PENDAHULUAN}
+\input{05-quantum}           % \section{QUANTUM}
+\input{06-entropi}           % \section{ENTROPY}
+\input{07-negative-entropy}  % \section{NEGATIVE ENTROPY}
+\input{08-kanal}             % \section{CHANNEL}
+%\input{09-contoh-slide-anda} % <-- tambahkan file slide Anda sendiri di sini
+
+%--- BAGIAN PENUTUP --------------------------------------------------
+\input{09-referensi}         % Daftar pustaka otomatis dari bib.bib
+\input{10-penutup}           % Slide "Thank You"
+
+\end{document}

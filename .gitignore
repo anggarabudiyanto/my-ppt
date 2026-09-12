@@ -1,0 +1,19 @@
+# Artefak kompilasi LaTeX — tidak perlu masuk Git
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+extracted/
+*.blx
+main.run.xml
+main-blx.bib

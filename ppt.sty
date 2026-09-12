@@ -1,0 +1,272 @@
+%=====================================================================
+%  PPT.STY — TEMA & PENGATURAN GLOBAL PRESENTASI
+%=====================================================================
+%  File ini memuat SEMUA pengaturan tampilan: paket, warna, font,
+%  footer, headline, kutipan, blok, daftar kode, dan makro bantu.
+%  Template diadaptasi dari VT Presentation Template & THU Beamer
+%  Theme, dikembangkan untuk Telkom University (AICOMS).
+%
+%  STRUKTUR FILE (gunakan daftar isi di bawah untuk melompat):
+%    [1] PAKET DASAR          — paket LaTeX yang dibutuhkan
+%    [2] KAP & CAPTION        — penamaan "Gambar"
+%    [3] KUTIPAN & FOOTNOTE   — biblatex + \firstcite/\secondcite
+%    [4] TEMA, WARNA & FOOTER — tema beamer + palet warna
+%    [5] FONT                 — Palatino (serif) + Open Sans (sans)
+%    [6] DAFTAR KODE (LISTINGS)
+%    [7] MAKRO BANTU NOTASI MATEMATIKA/KUANTUM
+%    [8] PENGATURAN EKSTRA    — headline, simbol navigasi, dll.
+%=====================================================================
+
+%=====================================================================
+%  [1] PAKET DASAR
+%=====================================================================
+\usepackage{xcolor}        % Warna teks: \textcolor{telu}{...}, dsb.
+\usepackage{transparent}   % Transparansi gambar: \transparent{0.2} (dipakai latar sampul)
+\usepackage{braket}        % Notasi kuantum |\psi> : \ket{...}, \bra{...}, \braket{...}
+\usepackage{caption}       % Kustomisasi caption gambar/tabel
+\usepackage{graphicx}      % Memasukkan gambar: \includegraphics[width=...]{...}
+\usepackage{tikz}          % Diagram vektor & penempatan logo absolut (tikzpicture)
+\usepackage{tikzsymbols}   % Simbol TikZ lucu (Smiley, dll.) — opsional
+\usepackage{amsmath}       % Persamaan: align, bmatrix, \text{}, dsb. (WAJIB math)
+\usepackage{amsthm,amssymb,amsfonts,latexsym,mathtools,thmtools,bbm}
+                           % Pelengkap matematika: \mathbb{}, \square, bukti, dsb.
+\usepackage{ragged2e}      % Perataan: \justifying (rata kiri-kanan) untuk teks slide
+\usepackage{booktabs}      % Tabel profesional: \toprule, \midrule, \bottomrule
+\usepackage{calligra}      % Font kaligrafi: {\calligra Teks} (dipakai slide "Enjoy!")
+\usepackage{fnpct}         % Interaksi footnote dengan tanda baca/kutipan
+\usepackage{listings}      % Menampilkan KODE PROGRAM: \begin{lstlisting}...\end{lstlisting}
+\usepackage[absolute,overlay]{textpos} % Kotak teks di koordinat absolut (opsional)
+\usepackage{adjustbox}     % Menyesuaikan ukuran konten: \begin{adjustbox}{width=...}
+\usepackage{xpatch}        % Untuk menambal perintah paket (dipakai kutipan lama)
+
+% Folder pencarian gambar (dicari berurutan). Dengan ini Anda bisa
+% menulis \includegraphics{logo/telkom.jpg} tanpa awalan "gambar/".
+\graphicspath{{images/}{./}{gambar/}}
+
+%=====================================================================
+%  [2] KAP GAMBAR & CAPTION
+%=====================================================================
+%  Caption berformat:  Gambar <slide>.<urutan>  /  Tabel <slide>.<urutan>
+%  Kap gambar: "Gambar <slide>.<urutan>."  |  kap tabel: "Tabel <slide>.<urutan>."
+%  Diatur EKSPLISIT per tipe (lebih tangguh daripada mendeteksi tipe).
+\renewcommand{\thefigure}{\arabic{framenumber}.\arabic{figure}}% nomor: <slide>.<urutan>
+\renewcommand{\thetable}{\arabic{framenumber}.\arabic{table}}
+\DeclareCaptionLabelFormat{cap-gambar}{Gambar~#2.\hspace{0.1em}}
+\DeclareCaptionLabelFormat{cap-tabel}{Tabel~#2.\hspace{0.1em}}
+\DeclareCaptionLabelSeparator{separatorbaru}{ }
+\captionsetup{labelsep=separatorbaru}
+\captionsetup[figure]{labelformat=cap-gambar}
+\captionsetup[table]{labelformat=cap-tabel}
+
+%  Cara memakai gambar + caption (lihat juga 00-contoh-fitur.tex):
+%    \begin{figure}
+%      \centering
+%      \includegraphics[width=0.8\textwidth]{gambar/DIAGRAM/diagram2.png}
+%      \captionsetup{font=tiny, justification=justified}
+%      \captionof{figure}{Keterangan gambar Anda.}
+%      \label{fig:label-anda}
+%    \end{figure}
+
+%=====================================================================
+%  [3] KUTIPAN & FOOTNOTE (BIBLATEX)
+%=====================================================================
+%  * Basis data pustaka : bib.bib  (entri BibTeX — lihat contoh di sana)
+%  * Gaya               : numeric (angka), urutan sesuai kemunculan
+%  * Backend            : bibtex (standar di semua instalasi TeX;
+%                         ganti ke backend=biber jika ingin fitur penuh
+%                         dan jalankan `biber main` sebagai ganti `bibtex main`)
+\usepackage[style=numeric, sorting=none, backend=bibtex]{biblatex}
+\addbibresource{bib.bib}          % <-- daftar file .bib (tambahkan bila perlu)
+\setbeamerfont{footnote}{size=\tiny}   % ukuran teks footnote
+
+%  Perintah kutipan yang tersedia:
+%    \cite{kunci}        -> [3]                       (nomor biasa)
+%    \firstcite{kunci}   -> footnote lengkap pertama kali
+%                           (penulis, judul, tahun di kaki slide)
+%    \secondcite{kunci}  -> footnote penanda saja (setelah pertama)
+\DeclareCiteCommand{\firstcite}
+  {\usebibmacro{prenote}}
+  {% penanda superscript di teks + catatan kaki berisi detail pustaka
+    \footnotemark[\thefield{labelnumber}]%
+    \footnotetext[\thefield{labelnumber}]{%
+        \printnames{labelname}%                              nama penulis
+        \setunit{\printdelim{nametitledelim}}%               pemisah
+        \printfield[citetitle]{labeltitle}%                  judul
+        \setunit{\printdelim{nametitledelim}}%               pemisah
+        \printfield{year}%                                   tahun
+        \newunit{\adddot}}%                                  titik penutup
+  }
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+\DeclareCiteCommand{\secondcite}
+  {\usebibmacro{prenote}}
+  {\footnotemark[\thefield{labelnumber}]}% hanya penanda nomor
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+%  Judul slide daftar pustaka dalam bahasa Indonesia ("Referensi").
+%  (dipanggil ulang pada 09-referensi.tex)
+
+%=====================================================================
+%  [4] TEMA, WARNA & FOOTER
+%=====================================================================
+\usetheme{Madrid}   % Tema dasar (alternatif: CambridgeUS, Dresden, dsb.)
+
+%  ---- PALET WARNA --------------------------------------------------
+%  fg = warna teks (foreground), bg = warna latar (background)
+%  Gunakan dalam \textcolor{telu}{...} atau \setbeamercolor{...}
+\definecolor{smuBlue}{RGB}{21, 28, 85}    % biru tua (blok contoh)
+\definecolor{scisGold}{RGB}{198, 146, 0}  % emas  (aksen utama, bullet, tombol)
+\definecolor{telu}{RGB}{148, 0, 0}        % merah Telkom University
+\definecolor{merah}{RGB}{255, 0, 0}       % merah terang (judul frame)
+\definecolor{abu}{RGB}{211, 211, 211}     % abu-abu terang (footer tanggal)
+\definecolor{abu1}{RGB}{47, 79, 79}       % abu kebiruan (batang judul frame)
+\definecolor{abu2}{RGB}{241, 241, 241}    % abu sangat terang (footer judul)
+
+%  Struktur dasar (judul bagian, bullet, tautan, rumus)
+\setbeamercolor*{structure}{bg=smuBlue, fg=smuBlue}
+\setbeamercolor*{palette primary}{use=structure, fg=telu, bg=abu}
+\setbeamercolor*{palette secondary}{use=structure, fg=white, bg=telu}
+\setbeamercolor*{palette tertiary}{use=structure, fg=white, bg=smuBlue}
+
+%  Batang judul setiap slide (frametitle)
+\setbeamercolor{frametitle}{bg=abu1, fg=merah}
+\setbeamercolor*{titlelike}{parent=palette primary}
+
+%  ---- FOOTER (kaki slide: nama | judul | tanggal+nomor) -------------
+%  PERBAIKAN: lebar total kini tepat 100% kertas
+%  ( .25 + .47 + .28 = 1.00 ; pada versi lama 1.05 sehingga bergeser )
+\setbeamercolor{author in head/foot}{fg=white, bg=scisGold}
+\setbeamerfont{author in head/foot}{size=\tiny}
+
+\setbeamercolor{nama_}{fg=white, bg=telu}      % kotak kiri  : nama
+\setbeamercolor{judul_}{fg=telu, bg=abu2}      % kotak tengah: judul pendek
+\setbeamercolor{tanggal_nomor}{fg=telu, bg=abu}% kotak kanan : tanggal + no.
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.25\paperwidth,ht=2.25ex,dp=1ex,center]{nama_}%
+      \usebeamerfont{author in head/foot}\insertshortauthor
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.47\paperwidth,ht=2.25ex,dp=1ex,center]{judul_}%
+      \usebeamerfont{author in head/foot}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.28\paperwidth,ht=2.25ex,dp=1ex,center]{tanggal_nomor}%
+      \usebeamerfont{author in head/foot}\insertshortdate
+      \hspace*{4ex}\insertframenumber{} / \inserttotalframenumber{}
+    \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+
+%  Headline (navigasi bagian di atas) — emas di atas putih
+\setbeamercolor{section in head/foot}{fg=scisGold, bg=white}
+\setbeamercolor{title in head/foot}{fg=white, bg=scisGold}
+\setbeamercolor{headline}{fg=scisGold, bg=white}
+
+%  ---- ELEMEN LAIN ---------------------------------------------------
+\setbeamercolor{item projected}{bg=scisGold}   % lingkaran penomoran
+\setbeamercolor{itemize item}{fg=scisGold}     % bullet level-1
+\setbeamercolor{itemize subitem}{fg=scisGold}  % bullet level-2
+\setbeamercolor{button}{bg=scisGold}           % tombol tautan
+
+%  Slide OUTLINE (daftar isi)
+\setbeamercolor{section in toc}{fg=black}
+\setbeamercolor{subsection in toc}{fg=black}
+
+%  ---- BLOK (block / alertblock / exampleblock) ----------------------
+%  Pemakaian: \begin{block}{Judul blok} isi \end{block}
+\setbeamercolor{block title}{bg=scisGold, fg=white}          % blok biasa
+\setbeamercolor{block body}{bg=scisGold!20}
+\setbeamercolor{block title alerted}{bg=orange, fg=white}    % blok peringatan
+\setbeamercolor{block body alerted}{bg=orange!10}
+\setbeamercolor{block title example}{bg=smuBlue, fg=white}   % blok contoh
+\setbeamercolor{block body example}{bg=smuBlue!10}
+
+%=====================================================================
+%  [5] FONT
+%=====================================================================
+\usefonttheme{default}          % teks utama memakai sans serif
+\usepackage{palatino}           % font serif Palatino untuk teks matematika
+\usepackage[default]{opensans}  % font Open Sans untuk teks slide
+\useinnertheme{circles}         % bullet berbentuk lingkaran
+
+%=====================================================================
+%  [6] TEMA LUAR & TAMPILAN ATAS
+%=====================================================================
+%  Outer theme menentukan kerangka: header, footer, sidebar.
+\useoutertheme{miniframes}      % navigasi "bola-bola" bagian di atas
+% \useoutertheme{default} \useoutertheme{infolines} \useoutertheme{smoothbars}
+% \useoutertheme{sidebar}  \useoutertheme{split}     \useoutertheme{shadow}
+
+%  Tinggi batang navigasi atas; sesuaikan 7.0ex jika judul bagian panjang
+\setbeamertemplate{headline}{%
+    \nointerlineskip
+    \begin{beamercolorbox}[wd=\paperwidth,ht=7.0ex]{headline}
+        \insertnavigation{\paperwidth}\vspace*{2.0ex}
+    \end{beamercolorbox}%
+}
+
+%  Hilangkan simbol navigasi di pojok kanan bawah
+\setbeamertemplate{navigation symbols}{}
+
+%=====================================================================
+%  [7] DAFTAR KODE (LISTINGS)
+%=====================================================================
+%  Pemakaian (lihat contoh lengkap di 00-contoh-fitur.tex):
+%    \begin{lstlisting}[language=Python]
+%    def halo(): print("Halo kuantum!")
+%    \end{lstlisting}
+\lstset{
+    basicstyle=\ttfamily\small,                 % font dasar kode
+    keywordstyle=\bfseries\color{blue},         % kata kunci  : biru tebal
+    emphstyle=\ttfamily\color{red},             % penekanan   : merah
+    stringstyle=\color{green!60!black},         % string      : hijau
+    numbers=left,                               % nomor baris di kiri
+    numberstyle=\small\color{gray},             % gaya nomor baris
+    rulesepcolor=\color{red!20!green!20!blue!20},% warna bayangan bingkai
+    frame=shadowbox,                            % bingkai bayangan
+    xleftmargin=0.6cm, xrightmargin=0.4cm,      % margin kiri/kanan kode
+}
+
+%=====================================================================
+%  [8] MAKRO BANTU NOTASI MATEMATIKA / KUANTUM
+%=====================================================================
+%  Tujuan: penulisan notasi KONSISTEN dan CEPAT. Contoh:
+%    $\ket{\psi}$, $\bra{0}$, $\ketbra{0}{1}$, $\braket{a|b}$,
+%    $\Tr(\rho)$, $\rho \in \mathbb{C}^{2\times2}$
+\newcommand{\Tr}{\operatorname{Tr}}              % jejak matriks (trace)
+\newcommand{\ketbra}[2]{\ket{#1}\bra{#2}}        % proyektor |a><b|
+\newcommand{\ev}[1]{\left\langle #1 \right\rangle}% nilai ekspektasi <A>
+\newcommand{\Iden}{\mathbb{1}}                   % matriks identitas kuantum
+
+%  Pengganti \text{...} saat mode matematika (lebih aman di caption)
+\newcommand{\mr}[1]{\mathrm{#1}}
+
+%  Menulis NAMA PERINTAH/kode di dalam teks biasa — aman dipakai di
+%  mana saja (sel tabel, judul blok, caption, item), tidak seperti
+%  \verb. Contoh: \code{\frac{a}{b}} atau \code{printf("hi")}
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+
+%=====================================================================
+%  [9] PENGATURAN EKSTRA
+%=====================================================================
+%  Bersihkan peringatan \translate dari beamer (lihat
+%  https://github.com/josephwright/beamer/issues/449)
+\pdfstringdefDisableCommands{\def\translate#1{#1}}
+
+%  Perbaikan dari versi lama:
+%  * \renewcommand{\thefigure}{\arabic{chapter}...} dihapus — counter
+%    "chapter" TIDAK ADA di kelas beamer sehingga menimbulkan error;
+%    kini memakai nomor slide (lihat bagian [2]).
+%  * \setbeamertemplate{enumerate items}{bg=scisGold} dihapus — bukan
+%    sintaks template yang sah; lingkaran penomoran sudah diatur lewat
+%    warna "item projected" di atas.
+%  * Patch \xapptobibmacro{cite} dihapus — bergantung versi biblatex;
+%    \firstcite/\secondcite di atas sudah mencakup kebutuhan yang sama
+%    secara stabil antar-versi.
+%=====================================================================
+%  AKHIR PPT.STY
+%=====================================================================

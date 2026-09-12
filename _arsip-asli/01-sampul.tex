@@ -1,0 +1,48 @@
+%---------------------------------------------------------
+%	TITLE SLIDE
+%---------------------------------------------------------
+\section{}
+
+% Set background
+\usebackgroundtemplate{\transparent{0.2}\includegraphics[width=\paperwidth]{gambar/logo/telkom.jpg}}
+% Disable logo
+\logo{}
+
+\begin{frame}
+ \vspace{-0.5cm}
+ \titlepage
+\vspace{1cm}
+    \begin{tikzpicture}[overlay,remember picture]
+        \node[inner sep=0pt] at (3.5,6.2){
+          \includegraphics[width=2.5 cm]{gambar/logo/TELU Horizontal.png}};
+        
+        \node[inner sep=0pt] at (7.5,6.2){
+          \includegraphics[width=3.5 cm]{gambar/logo/Logo_AICOMS_Telkom_University.png}};
+        
+        \node[inner sep=0pt] at (11.5,6.2){
+          \includegraphics[width=2.5 cm]{gambar/logo/TELU Horizontal.png}};
+    \end{tikzpicture}
+\end{frame}
+
+
+
+
+
+
+
+% Clear background
+\usebackgroundtemplate{}
+% Enable logo
+\addtobeamertemplate{headline}{}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east] at (current page.north east) {
+      \includegraphics[width=0.5cm]{gambar/logo/TELU Vertikal.png}
+    };
+  \end{tikzpicture}
+}
+
+
+% Switch to Theme III
+\setbeamercolor{section in head/foot}{fg=scisGold, bg=white}
+\setbeamercolor{title in head/foot}{fg=white, bg=scisGold}
+\setbeamercolor{headline}{fg=scisGold, bg=white}

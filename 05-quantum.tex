@@ -1,0 +1,116 @@
+%=====================================================================
+%  05-QUANTUM.TEX — PRINSIP DASAR KUANTUM
+%=====================================================================
+%  Contoh penulisan notasi: \ket{...}, \hat{U}, \rho, bmatrix.
+%  Typo pada versi lama (\mathcal{p}_i, "qubt", "partiker", "dnegan")
+%  sudah diperbaiki.
+%=====================================================================
+\section{QUANTUM}
+
+\begin{frame}
+    \frametitle{Prinsip Dasar}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}\tiny\justifying
+                \item Quantum \\
+                    Quantum adalah teori fisika yang menggambarkan perilaku
+                    partikel sangat kecil (atom dan partikel subatom),
+                    didasarkan pada sifat dualitas: partikel dapat berperilaku
+                    sebagai gelombang dan partikel sekaligus. Konsep dasarnya
+                    dijelaskan oleh vektor keadaan $\ket{\psi}$
+                    \cite{barnett2009quantum}.
+                \item Operator Unitary \\
+                    Operator unitary digunakan dalam evolusi kuantum dan
+                    pemrosesan informasi kuantum: ia menentukan apa yang
+                    mungkin dan tidak mungkin dilakukan dalam pemrosesan
+                    informasi kuantum,
+                    \begin{equation}
+                        \hat{U}\hat{U}^\dagger=\hat{I}=\hat{U}^\dagger\hat{U}.
+                    \end{equation}
+                \item Matriks Densitas \\
+                    Representasi matematis keadaan kuantum sistem, mencakup
+                    keadaan campuran (\textit{mixed state}) ketika terdapat
+                    ketidakpastian pada keadaan sistem; vektor keadaan cukup
+                    hanya untuk keadaan murni. Dengan matriks densitas kita
+                    dapat menghitung nilai ekspektasi observabel kuantum.
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.5\textwidth}
+            \vspace{0.4cm}
+            \begin{itemize}\tiny
+                \item[]\justifying Definisi umum matriks densitas untuk
+                    keadaan campuran:
+                    \begin{equation}
+                        \rho=\sum_i p_i\,\ketbra{\psi_i}{\psi_i}
+                        \label{eq:matriks-densitas}
+                    \end{equation}
+                    dengan $p_i$ peluang sistem berada pada keadaan murni
+                    $\ket{\psi_i}$, di mana $\sum_i p_i=1$ dan
+                    $\Tr(\rho)=1$.
+                \item[]\vspace{0.2cm}
+                \item[]\justifying {\footnotesize Tips notasi: proyektor
+                    $\ketbra{\psi_i}{\psi_i}$ cukup ditulis dengan makro
+                    \code{\ketbra{a}{b}} dari \code{ppt.sty}.}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{QUANTUM ENTANGLEMENT \cite{muller2023}}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}\tiny\justifying
+                \item EPR \\
+                    Pada tahun 1935, Albert Einstein, Boris Podolsky, dan Nathan
+                    Rosen menerbitkan makalah yang menggambarkan eksperimen
+                    pemikiran (Gedankenexperiment) untuk mengilustrasikan
+                    ketidakmasukakalan \textit{quantum entanglement} yang
+                    menantang hukum dasar alam semesta \cite{einstein1935can}.
+                \item Quantum Entanglement \\
+                    Secara sederhana, \textit{quantum entanglement} merujuk pada
+                    ketergantungan aspek-aspek sepasang partikel terjerat:
+                    aspek satu partikel bergantung pada aspek partikel lainnya,
+                    berapa pun jarak di antara keduanya.
+                \item Bentuk Partikel \\
+                    Partikel terjerat dapat berupa elektron atau foton;
+                    aspeknya dapat berupa keadaan partikel, misalnya arah
+                    spin (berputar ke satu arah atau arah lain).
+                \item Pengukuran \\
+                    Apabila kedua partikel terjerat, pengukuran pada satu
+                    partikel langsung menentukan informasi pasangannya, bahkan
+                    ketika keduanya terpisah jutaan tahun cahaya.
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}\tiny\justifying
+                \item Superposisi \\
+                    Superposisi kuantum adalah gagasan bahwa partikel berada
+                    dalam beberapa keadaan sekaligus; saat diukur, partikel
+                    memilih salah satu keadaan dalam superposisi tersebut.
+                \item Cara Partikel Terjerat \\
+                    Prinsip membuat partikel terjerat: memecah sistem menjadi
+                    dua dengan jumlah besaran diketahui. Contoh: memecah
+                    partikel dengan spin nol menjadi dua partikel berspin
+                    berlawanan sehingga jumlahnya tetap nol.
+                \item Runtuhnya Probabilitas \\
+                    Dalam mekanika kuantum, spin tiap partikel adalah
+                    "sebagian naik dan sebagian turun" sampai diukur; saat
+                    pengukuran terjadi, keadaan kuantum spin "runtuh" ke naik
+                    atau turun seketika, meruntuhkan partikel lainnya ke spin
+                    berlawanan.
+                \item Variabel Tersembunyi \\
+                    Einstein berteori adanya properti tak diketahui --- dijuluki
+                    variabel tersembunyi --- yang menentukan keadaan partikel
+                    sebelum pengukuran.
+                \item Persamaan Bell \\
+                    Bell menghasilkan \textit{Bell's inequality}: selalu benar
+                    untuk teori variabel tersembunyi, tetapi tidak selalu benar
+                    untuk mekanika kuantum; uji eksperimen mendukung mekanika
+                    kuantum \cite{aspect1999bell}.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
